@@ -5,7 +5,11 @@ CONFIG -= qt
 
 SOURCES += \
         main.cpp \
-    hex.cpp
+    hex.cpp \
+    interpreter.cpp \
+    command_list.cpp
 
 HEADERS += \
-    hex.h
+    hex.h \
+    interpreter.h \
+    command_list.h
