@@ -2,35 +2,21 @@
 #define COMMAND_LIST_H
 #include "hex.h"
 
-class comand_list;
+//class comand_list;
 
 class cmd{
 private:
     cmd *next;
     cmd *back;
 public:
+    cmd()
+    {
+        next = nullptr;
+        back = nullptr;
+    }
     hexes value_cmd;
 
-    /*
-    void print_hex()
-    {
-        value_cmd.print_hex();
-    }
-
-
-    void print_int()
-    {
-        value_cmd.print_int();
-    }
-
-
-    void print_bin()
-    {
-        value_cmd.print_bin();
-    }
-
-*/
-friend class comand_list;
+friend class command_list;
 };
 
 class command_list
@@ -42,6 +28,7 @@ public:
     command_list();
     command_list(const char *path);
 
+    //const unsigned long&
     void add(int);
     void add(hexes);
     void add(char[2]);
@@ -52,6 +39,8 @@ public:
 
     void read_from_file(char*);
     void read_from_file(std::string);
+
+    void debag_print(); //delete
 
     hexes& operator [] (int n);//нам все равно нужен будет только hexes, нахер нам выдавать класс в котором приватные поля все равно закрыты
 };
