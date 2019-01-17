@@ -16,6 +16,7 @@ public:
     hexes(const unsigned long&);
     hexes(const std::string&);
     hexes(const std::bitset<8>&);
+    hexes(char[2]);
 
     void print_bin();
     void print_hex();

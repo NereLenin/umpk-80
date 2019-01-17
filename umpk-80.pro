@@ -6,10 +6,10 @@ CONFIG -= qt
 SOURCES += \
         main.cpp \
     hex.cpp \
-    interpreter.cpp \
-    command_list.cpp
+    command_list.cpp \
+    emulator.cpp
 
 HEADERS += \
     hex.h \
-    interpreter.h \
-    command_list.h
+    command_list.h \
+    emulator.h
