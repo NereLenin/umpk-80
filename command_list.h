@@ -30,7 +30,7 @@ public:
 
     //const unsigned long&
     void add(int);
-    void add(hexes);
+    void add(const hexes&);
     void add(char[2]);
     void add(std::string);
 
@@ -42,7 +42,7 @@ public:
 
     void debag_print(); //delete
 
-    hexes& operator [] (int n);//нам все равно нужен будет только hexes, нахер нам выдавать класс в котором приватные поля все равно закрыты
+    hexes& operator [] (int);//нам все равно нужен будет только hexes, нахер нам выдавать класс в котором приватные поля все равно закрыты
 };
 
 #endif // COMMAND_LIST_H

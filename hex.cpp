@@ -118,3 +118,53 @@ void hexes::c_shift_right (const unsigned long& n)
 
       delete[] temp;
 }
+
+int hexes::to_int()
+{
+    return static_cast<int>(b.to_ulong());
+}
+
+bool hexes::operator == (const char* value)
+{
+    //проверка входных параметров, действительно ли от 1 до F,
+    //вхождение F -f
+
+    int one=static_cast<int>(value[0]);
+
+    if(one<=102&&value[0]>=97)
+         one = one -87;
+
+    else
+        one = one-48;
+
+    int two=static_cast<int>(value[1]);
+
+    if(two<=102&&two>=97)
+         two = two-87;
+    else
+        two = two-48;
+
+    int res = one * 16 + two;
+
+    return to_int() == res;
+}
+
+hexes::hexes(char value[2])
+{
+    //проверка на соответсвие char формату
+
+    unsigned long value_i =0;
+
+
+
+}
+
+char* hexes::to_char()
+{
+    char *new_char = new char[2];
+
+    int value = to_int();
+
+
+
+}

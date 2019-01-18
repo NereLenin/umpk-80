@@ -22,6 +22,9 @@ public:
     void print_hex();
     void print_int();
 
+    int to_int();
+    char* to_char();
+
     void operator = (const hexes&);
     void operator = (const unsigned long&);
 
@@ -36,6 +39,7 @@ public:
     void c_shift_left (const unsigned long&);
     void c_shift_right (const unsigned long&);
 
+    bool operator == (const char*);
 
 };
 #endif // HEX_H

@@ -20,30 +20,46 @@ private:
     hexes H,L;
 
     //especial virtual registr
-    hexes M;
+   // hexes M;
 
-    void MOV(char,char);
+    void MOV(hexes&,hexes&);//p
     //R,R / R,M
 
-    void MVI(char,hexes*);
+    void MVI(hexes& R);//p
     //R,value
 
-    void ADD(char);
+    void ADD(hexes&);//p
+
+
+    //flags
+    bool Cy;
+    bool Z;
+    bool P;
 
 public:
     int point;
 
-    void add(command_list*);
+    emulator();
+
+    //set get point
+    void add(const command_list&);
     void add_from_file(char *path);
 
-    void start(int);
+    void add_cmd(int);
+    void add_cmd(const hexes&);
+    void add_cmd(const std::string&);
+    void add_cmd(char[2]);
+
+    void start_from_point();
     void start();
+
+    void iteration();
 
     void print_list();
     void print_flags();
-    void pring_registers();
+    void print_registers();
 
-    emulator();
+
 };
 
 #endif // EMULATOR_H
