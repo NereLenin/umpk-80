@@ -122,8 +122,10 @@ void hexes::c_shift_right (const unsigned long& n)
 int hexes::to_int()
 {
     return static_cast<int>(b.to_ulong());
+
 }
 
+//выпилить
 bool hexes::operator == (const char* value)
 {
     //проверка входных параметров, действительно ли от 1 до F,
@@ -149,6 +151,13 @@ bool hexes::operator == (const char* value)
     return to_int() == res;
 }
 
+bool hexes::operator == (int value)
+{
+    unsigned long one=static_cast<unsigned long>(value);
+
+    return b.to_ulong() == one;
+}
+//выпилить
 hexes::hexes(char value[2])
 {
     //проверка на соответсвие char формату
@@ -159,12 +168,22 @@ hexes::hexes(char value[2])
 
 }
 
+//выпилить
 char* hexes::to_char()
 {
-    char *new_char = new char[2];
-
+    char *str = new char[2];
     int value = to_int();
 
+    int tvalue = value;
 
+    for(int i=0;i<2&&tvalue>=1&&value>=1;i++)
+    {
+        tvalue%=16;
+        value/=16;
+        if(tvalue>9) str[1-i] = static_cast<char>(tvalue + 87);
+        else str[1-i] = static_cast<char>(tvalue + 48);
+        tvalue = value;
+    }
 
+    return str;
 }

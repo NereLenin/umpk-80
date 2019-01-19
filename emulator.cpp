@@ -16,6 +16,8 @@ emulator::emulator()
     Cy = Z = P = 0;
 
     point = 0;
+
+
 }
 
 void emulator::print_list()
@@ -93,7 +95,18 @@ void emulator::ADD(hexes& R)
 void emulator::iteration()
 {
 
-    if(list[point] == "78") MOV(A,B);
+   switch(list[point].to_int())
+   {
+   //MOV
 
+   case 120: MOV(A,B); break; //78 ; B,A
 
+   //MVI
+   case 6: MVI(B); break; //06 MVI B
+
+   default:
+       std::cout << "comd not found" <<std::endl;
+       break;
+   }
+    std::cout << "iteration complete" << std::endl;
 }

@@ -4,6 +4,8 @@
 #include <bitset>
 
 
+//убрать to int описать правила преобразования
+
 
 class hexes
 {
@@ -40,6 +42,7 @@ public:
     void c_shift_right (const unsigned long&);
 
     bool operator == (const char*);
+    bool operator == (int);
 
 };
 #endif // HEX_H
