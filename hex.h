@@ -16,9 +16,7 @@ public:
 
     hexes();
     hexes(const unsigned long&);
-    hexes(const std::string&);
-    hexes(const std::bitset<8>&);
-    hexes(char[2]);
+    hexes(const char*);
 
     void print_bin();
     void print_hex();
@@ -38,11 +36,18 @@ public:
     void operator << (const unsigned long&);
     void operator >> (const unsigned long&);
 
-    void c_shift_left (const unsigned long&);
+    void c_shift_left ();//one shift
+    void c_shift_right ();
+
+    void c_shift_left (const unsigned long&);//many shift
     void c_shift_right (const unsigned long&);
 
-    bool operator == (const char*);
-    bool operator == (int);
+    bool operator == (const char*);//Выпилить?
+    bool operator == (int);//выпилить?
+
+    bool operator == (const hexes&);//выпилить?
+
+
 
 };
 #endif // HEX_H

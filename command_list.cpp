@@ -6,37 +6,8 @@ command_list::command_list()
     end = nullptr;
 }
 
-//const unsigned long&
-void command_list::add(int value){
-    cmd *new_cmd = new cmd;
 
-    new_cmd->value_cmd = static_cast<unsigned long>(value);//?
-
-
-    new_cmd->back = nullptr;
-
-    if(begin==nullptr)
-    {
-        begin = new_cmd;
-        end = new_cmd;
-        return;
-    }
-
-    if(begin->next == nullptr)
-    {
-        begin->next = new_cmd;
-        new_cmd->back = begin;
-
-        end = new_cmd;
-
-        return;
-    }
-
-    end->next = new_cmd;
-    new_cmd->back = end;
-
-    end = new_cmd;
-}
+//проверить этот и следующий метод на излишнее копирование при передаче
 
 void command_list::add(const hexes &value){
     cmd *new_cmd = new cmd;
@@ -69,6 +40,21 @@ void command_list::add(const hexes &value){
     end = new_cmd;
 }
 
+//const unsigned long&
+void command_list::add(int value){
+    hexes *new_cmd = new hexes;
+
+    *new_cmd = static_cast<unsigned long>(value);//?
+
+    add(*new_cmd);
+
+    //? не удаляем
+}
+void command_list::add(const char* value){
+    hexes *new_cmd = new hexes(value);
+
+    add(*new_cmd);
+}
 
 void command_list::remove(int index)
 {

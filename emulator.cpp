@@ -1,29 +1,5 @@
 #include "emulator.h"
 
-emulator::emulator()
-{
-    A = 0;
-
-    B = 0;
-    C = 0;
-
-    D = 0;
-    E = 0;
-
-    H = 0;
-    L = 0;
-
-    Cy = Z = P = 0;
-
-    point = 0;
-
-
-}
-
-void emulator::print_list()
-{
-    list.print();
-}
 
 void emulator::print_registers()
 {
@@ -71,6 +47,10 @@ void emulator::add_cmd(const hexes& value)
     list.add(value);
 }
 
+void emulator::add_cmd(const char* value)
+{
+    list.add(value);
+}
 
 //-----------------------------------//
 
@@ -92,21 +72,58 @@ void emulator::ADD(hexes& R)
         C=1;
     point++;
 }
-void emulator::iteration()
+
+
+emulator::emulator()
+{
+    A = 0;
+
+    B = 0;
+    C = 0;
+
+    D = 0;
+    E = 0;
+
+    H = 0;
+    L = 0;
+
+    Cy = Z = P = 0;
+
+    point = 0;
+
+    all_cmd = 2;//сколько всего команд в эмуляторе
+
+    init_umpk_cmd_list();
+
+}
+
+void emulator::print_list()
+{
+    list.print();
+}
+
+void emulator::init_umpk_cmd_list()
 {
 
-   switch(list[point].to_int())
-   {
-   //MOV
+    umpk_cmd_list.add("78");//add to program list
+    cmd_methods[0] = (&emulator::MOV_A_B); // add to func array
 
-   case 120: MOV(A,B); break; //78 ; B,A
+    umpk_cmd_list.add("06");
+    cmd_methods[1] = (&emulator::MVI_B);
 
-   //MVI
-   case 6: MVI(B); break; //06 MVI B
 
-   default:
-       std::cout << "comd not found" <<std::endl;
-       break;
-   }
-    std::cout << "iteration complete" << std::endl;
+}
+
+void emulator::iteration()
+{
+    for(int i =0; i<all_cmd; i++)//проходим по всем командам
+        if(list[point] == umpk_cmd_list[i])//
+        {
+            (this->*cmd_methods[i])();
+            return;
+        }
+
+
+    std::cout << "cmd not found" << std::endl;
+
 }

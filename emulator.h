@@ -3,10 +3,25 @@
 
 #include "hex.h"
 #include "command_list.h"
+class emulator;
+
+
 class emulator
 {
 private:
     command_list list;
+
+    command_list umpk_cmd_list; //maybe will be better to do it static?
+
+    //all availible?
+    int all_cmd; //чтобы знать сколько у нас вообще команд, не в листе, а реализованно и поддерживается эмулятором
+
+//    typedef void (emulator::*srch_fnc)(void);
+//    srch_fnc cmd_methods[3];
+
+    void(emulator::*cmd_methods[2])(void);
+
+
 
     hexes A;
 
@@ -22,20 +37,27 @@ private:
     //especial virtual registr
    // hexes M;
 
-    void MOV(hexes&,hexes&);//p
-    //R,R / R,M
+    void MOV(hexes& R1,hexes& R2);//p
 
     void MVI(hexes& R);//p
-    //R,value
 
-    void ADD(hexes&);//p
+    void ADD(hexes& R);//p
 
+
+    //mov
+    void MOV_A_B() { MOV(A,B);}
+
+
+    //mvi
+    void MVI_B() { MVI(B);}
 
     //flags
     bool Cy;
     bool Z;
     bool P;
 
+
+    void init_umpk_cmd_list();
 public:
     int point;
 
@@ -48,7 +70,7 @@ public:
     void add_cmd(int);
     void add_cmd(const hexes&);
     void add_cmd(const std::string&);
-    void add_cmd(char[2]);
+    void add_cmd(const char*);
 
     void start_from_point();
     void start();

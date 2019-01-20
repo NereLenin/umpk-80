@@ -31,7 +31,7 @@ public:
     //const unsigned long&
     void add(int);
     void add(const hexes&);
-    void add(char[2]);
+    void add(const char *value);
     void add(std::string);
 
     void print();

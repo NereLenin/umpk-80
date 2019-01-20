@@ -6,9 +6,6 @@ using namespace std;
 
 
 
-
-
-
 int main()
 {
 
@@ -21,9 +18,9 @@ int main()
 
 
     cout << endl<< "add commands" << endl;
-    test.add_cmd(6);
-    test.add_cmd(255);
-    test.add_cmd(120);
+    test.add_cmd("06");
+    test.add_cmd("0f");
+    test.add_cmd("78");
 
     test.print_list();
 
@@ -35,7 +32,6 @@ int main()
     cout << endl << "Second iteration" << endl;
     test.iteration();
     test.print_registers();
-
 
     return 0;
 }
