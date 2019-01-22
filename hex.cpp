@@ -132,19 +132,21 @@ int hexes::to_int()
 bool hexes::operator == (const char* value)
 {
     //проверка входных параметров, действительно ли от 1 до F,
-    //вхождение F -f
 
     int one=static_cast<int>(value[0]);
 
-    if(one<=102 && value[0]>=97)
+    if(one<=70 && one>=65)
+         one = one -55;
+    else if(one<=102 && one>=97)
          one = one -87;
-
     else
         one = one-48;
 
-    int two=static_cast<int>(value[1]);
 
-    if(two<=102 && two>=97)
+    int two=static_cast<int>(value[1]);
+    if(two<=70 && two>=65)
+         two = two -55;
+    else if(two<=102 && two>=97)
          two = two-87;
     else
         two = two-48;
@@ -163,19 +165,24 @@ bool hexes::operator == (int value)
 //выпилить
 hexes::hexes(const char* value)
 {
+    //проверка входных параметров, действительно ли от 1 до F,
+
     //проверка на соответсвие char формату
 
     int one=static_cast<int>(value[0]);
 
-    if(one<=102 && value[0]>=97)
+    if(one<=70 && one>=65)
+         one = one -55;
+    else if(one<=102 && one>=97)
          one = one -87;
     else
         one = one-48;
 
 
     int two=static_cast<int>(value[1]);
-
-    if(two<=102 && two>=97)
+    if(two<=70 && two>=65)
+         two = two -55;
+    else if(two<=102 && two>=97)
          two = two-87;
     else
         two = two-48;
