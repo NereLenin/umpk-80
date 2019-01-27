@@ -10,10 +10,9 @@
 class hexes
 {
 private:
+    bool right_hex_alphabet(const char* value); //p
+    std::bitset<8> b; // p
 public:
-
-    std::bitset<8> b; // 9 бит для флагов?
-
     hexes();
     hexes(const unsigned long&);
     hexes(const char*);
@@ -26,7 +25,9 @@ public:
     char* to_char();
 
     void operator = (const hexes&);
-    void operator = (const unsigned long&);
+    void operator = (int value);
+    void operator = (const char*);
+
 
     hexes operator + (const hexes &);
     hexes operator - (const hexes &);
@@ -39,8 +40,9 @@ public:
     void c_shift_left ();//one shift
     void c_shift_right ();
 
-    void c_shift_left (const unsigned long&);//many shift
-    void c_shift_right (const unsigned long&);
+
+    void c_shift_left (int n);//many shift
+    void c_shift_right (int n);
 
     bool operator == (const char*);//Выпилить?
     bool operator == (int);//выпилить?

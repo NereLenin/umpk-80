@@ -51,6 +51,13 @@ private:
 
     void ADD(hexes& R);//p
 
+    void ADI();
+
+    void SUB(hexes& R);
+
+    void SUI();
+
+
 
     //mov
 
@@ -135,6 +142,20 @@ private:
     void ADD_E() { ADD(E);}
     void ADD_H() { ADD(H);}
     void ADD_L() { ADD(L);}
+    //add m
+
+
+    void SUB_A() { SUB(A);}
+    void SUB_B() { SUB(B);}
+    void SUB_C() { SUB(C);}
+    void SUB_D() { SUB(D);}
+    void SUB_E() { SUB(E);}
+    void SUB_H() { SUB(H);}
+    void SUB_L() { SUB(L);}
+    //SUB m
+
+
+
 
 
 

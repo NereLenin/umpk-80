@@ -52,27 +52,6 @@ void emulator::add_cmd(const char* value)
     list.add(value);
 }
 
-//-----------------------------------//
-
-void emulator::MOV(hexes& R1, hexes& R2){
-    R1 = R2;
-    point++;
-}
-
-void emulator::MVI(hexes& R){
-    point++;
-    R = list[point];
-    point++;
-}
-
-void emulator::ADD(hexes& R)
-{
-    A = (A+R);
-    if(A.to_int() + R.to_int()>255)
-        C=1;
-    point++;
-}
-
 
 emulator::emulator()
 {
@@ -330,6 +309,39 @@ void emulator::init_umpk_cmd_list()
     umpk_cmd_list.add("85");
     add_cmd_methods(all_cmd,(&emulator::ADD_L));
     //ADD M
+
+
+    umpk_cmd_list.add("C6");
+    add_cmd_methods(all_cmd,(&emulator::ADI));
+
+
+    //SUB A
+    umpk_cmd_list.add("97");
+    add_cmd_methods(all_cmd,(&emulator::SUB_A));
+
+    umpk_cmd_list.add("90");
+    add_cmd_methods(all_cmd,(&emulator::SUB_B));
+
+    umpk_cmd_list.add("91");
+    add_cmd_methods(all_cmd,(&emulator::SUB_C));
+
+    umpk_cmd_list.add("92");
+    add_cmd_methods(all_cmd,(&emulator::SUB_D));
+
+    umpk_cmd_list.add("93");
+    add_cmd_methods(all_cmd,(&emulator::SUB_E));
+
+    umpk_cmd_list.add("94");
+    add_cmd_methods(all_cmd,(&emulator::SUB_H));
+
+    umpk_cmd_list.add("95");
+    add_cmd_methods(all_cmd,(&emulator::SUB_L));
+    //sub m
+
+    umpk_cmd_list.add("D6");
+    add_cmd_methods(all_cmd,(&emulator::SUI));
+
+
 /*
     std::cout << all_cmd << std::endl;
 */
@@ -347,4 +359,48 @@ void emulator::iteration()
 
     std::cout << "cmd not found" << std::endl;
 
+}
+
+
+//-----------------------------------//
+
+//flag Z
+
+void emulator::MOV(hexes& R1, hexes& R2){
+    R1 = R2;
+    point++;
+}
+
+void emulator::MVI(hexes& R){
+    point++;
+    R = list[point];
+    point++;
+}
+
+void emulator::ADD(hexes& R)
+{
+    A = (A+R);
+    if(A.to_int() + R.to_int()>255)
+        C=1;
+    point++;
+}
+
+void emulator::ADI(){
+    point++;
+    ADD(list[point]);
+    point++;
+}
+
+void emulator::SUB(hexes& R)
+{
+    A = (A+R);
+    if(A.to_int() - R.to_int()<0)
+        C=1;
+    point++;
+}
+
+void emulator::SUI(){
+    point++;
+    SUB(list[point]);
+    point++;
 }

@@ -6,11 +6,12 @@
 using namespace std;
 
 
-
+// constructors
 hexes::hexes()
 {
     b = 0;
 }
+
 
 hexes::hexes(const unsigned long& value)
 {
@@ -19,6 +20,13 @@ hexes::hexes(const unsigned long& value)
 }
 
 
+hexes::hexes(const char* value)
+{
+    operator=(value);
+}
+
+
+// print format
 void hexes::print_bin()
 {
     cout << b << endl;
@@ -36,6 +44,33 @@ void hexes::print_hex()
 }
 
 
+// to_format
+
+int hexes::to_int()
+{
+    return static_cast<int>(b.to_ulong());
+
+}
+
+//выпилить
+char* hexes::to_char()
+{
+    char *str = new char[2];
+    int value = to_int();
+
+    int tvalue = value;
+
+    for(int i=0;i<2 && tvalue>=1 && value>=1;i++)
+    {
+        tvalue%=16; value/=16;
+        if(tvalue>9) str[1-i] = static_cast<char>(tvalue + 87);
+        else str[1-i] = static_cast<char>(tvalue + 48);
+        tvalue = value;
+    }
+
+    return str;
+}
+
 
 
 void hexes::operator = (const hexes& two)
@@ -43,12 +78,43 @@ void hexes::operator = (const hexes& two)
     b = two.b;
 }
 
-
-void hexes::operator = (const unsigned long& value)
+void hexes::operator = (int value)
 {
-   b = value;
+
+   b = static_cast<std::size_t>(value);
 }
 
+void hexes::operator = (const char* value)
+{
+    if(!right_hex_alphabet(value))
+    {
+        std::cout << "not rigt hex alphabet" << std::endl;
+        return;
+    }
+
+    int one=static_cast<int>(value[0]);
+
+    if(one<=70 && one>=65)
+         one = one -55;
+    else if(one<=102 && one>=97)
+         one = one -87;
+    else
+        one = one-48;
+
+
+    int two=static_cast<int>(value[1]);
+    if(two<=70 && two>=65)
+         two = two -55;
+    else if(two<=102 && two>=97)
+         two = two-87;
+    else
+        two = two-48;
+
+    int res = one * 16 + two;
+
+    operator=(res);
+
+}
 
 hexes hexes::operator + (const hexes& two)
 {
@@ -71,7 +137,7 @@ hexes hexes::operator / (const hexes& two)
 }
 
 
-
+// shifts
 
 void hexes::operator << (const unsigned long& n)
 {
@@ -83,52 +149,53 @@ void hexes::operator >> (const unsigned long& n)
     b>>=(n);
 }
 
-//test разобраться с предупрежджениями
-void hexes::c_shift_left (const unsigned long& n)
+
+void hexes::c_shift_left()
 {
+      std::size_t temp= b[7];
 
-    //првоерить дописать если количество сдвигов больше разряда или запретить или поделить на количество разрядов а потом сдвигать
-     int tn = static_cast<int>(n);
-     std::size_t *temp = new std::size_t[n];
-    // unsigned long *temp = new unsigned long[n];
+      b<<=1;
 
-
-      for(int i=0; i < tn; i++)
-            temp[i] = b[7-i];
-
-      b<<=n;
-
-      for(int i=0; i < tn; i++)
-            b[i] = temp[(tn-1)-i];
-
-      delete[] temp;
-}
-
-void hexes::c_shift_right (const unsigned long& n)
-{
-
-    //првоерить дописать если количество сдвигов больше разряда или запретить или поделить на количество разрядов а потом сдвигать
-     int tn = static_cast<int>(n);
-      int *temp = new int[n];
-
-      for(int i=0; i < tn; i++)
-            temp[i] = static_cast<int>(b[i]);
-
-      b>>=n;
-
-      for(int i=0; i < tn; i++)
-            b[(7 - (tn-1)) + i] = temp[i];
-
-      delete[] temp;
-}
-
-int hexes::to_int()
-{
-    return static_cast<int>(b.to_ulong());
+       b[0] = temp;
 
 }
 
-//выпилить
+void hexes::c_shift_right()
+{
+
+    std::size_t temp= b[0];
+
+    b>>=1;
+
+    b[7] = temp;
+}
+
+void hexes::c_shift_left(int n)
+{
+     for(int i=0; i<n;i++)
+         c_shift_left();
+}
+
+void hexes::c_shift_right(int n)
+{
+
+     for(int i=0; i<n;i++)
+         c_shift_right();
+}
+
+
+bool hexes::operator==(const hexes &two)
+{
+    return b == two.b;
+}
+
+bool hexes::operator == (int value)
+{
+    unsigned long one=static_cast<unsigned long>(value);
+
+    return b.to_ulong() == one;
+}
+
 bool hexes::operator == (const char* value)
 {
     //проверка входных параметров, действительно ли от 1 до F,
@@ -156,62 +223,47 @@ bool hexes::operator == (const char* value)
     return to_int() == res;
 }
 
-bool hexes::operator == (int value)
+
+bool hexes::right_hex_alphabet(const char *value)
 {
-    unsigned long one=static_cast<unsigned long>(value);
+    bool res_one,res_two;
+    res_one = res_two = 0;
 
-    return b.to_ulong() == one;
-}
-//выпилить
-hexes::hexes(const char* value)
-{
-    //проверка входных параметров, действительно ли от 1 до F,
+    int one = static_cast<int>(value[0]);
+    for(int i = 48; i<=57;i++)
+            if(i==one) res_one = true;
 
-    //проверка на соответсвие char формату
-
-    int one=static_cast<int>(value[0]);
-
-    if(one<=70 && one>=65)
-         one = one -55;
-    else if(one<=102 && one>=97)
-         one = one -87;
-    else
-        one = one-48;
-
-
-    int two=static_cast<int>(value[1]);
-    if(two<=70 && two>=65)
-         two = two -55;
-    else if(two<=102 && two>=97)
-         two = two-87;
-    else
-        two = two-48;
-
-    int res = one * 16 + two;
-
-    operator=(static_cast<unsigned long>(res));
-}
-
-//выпилить
-char* hexes::to_char()
-{
-    char *str = new char[2];
-    int value = to_int();
-
-    int tvalue = value;
-
-    for(int i=0;i<2 && tvalue>=1 && value>=1;i++)
+    if(!res_one)
     {
-        tvalue%=16; value/=16;
-        if(tvalue>9) str[1-i] = static_cast<char>(tvalue + 87);
-        else str[1-i] = static_cast<char>(tvalue + 48);
-        tvalue = value;
+    for(int i = 65; i<=70;i++)
+            if(i==one) res_one = true;
     }
 
-    return str;
-}
+    if(!res_one)
+    {
+    for(int i = 97; i<=102;i++)
+            if(i==one) res_one = true;
+    }
 
-bool hexes::operator==(const hexes &two)
-{
-    return b == two.b;
+
+    int two = static_cast<int>(value[1]);
+
+    if(!res_two)
+    {
+    for(int i = 48; i<=57;i++)
+            if(i==two) res_two = true;
+    }
+
+    if(!res_two)
+    {
+    for(int i = 65; i<=70;i++)
+            if(i==two) res_two = true;
+    }
+    if(!res_two)
+    {
+    for(int i = 97; i<=102;i++)
+            if(i==two) res_two = true;
+    }
+
+    return res_one&&res_two;
 }

@@ -9,16 +9,22 @@ using namespace std;
 int main()
 {
 
-    emulator test;
 
-    test.add_cmd("2E");
-    test.add_cmd("FF");
-    test.add_cmd("85");
+    hexes one;
 
-    test.iteration();
-    test.iteration();
+    one.print_bin();
 
-    test.print_registers();
+
+//    emulator test;
+
+//    test.add_cmd("2E");
+//    test.add_cmd("FF");
+//    test.add_cmd("85");
+
+//    test.iteration();
+//    test.iteration();
+
+//    test.print_registers();
 
     return 0;
 }
