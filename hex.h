@@ -50,6 +50,7 @@ public:
     bool operator == (const hexes&);//выпилить?
 
 
+    friend class emulator;
 
 };
 #endif // HEX_H

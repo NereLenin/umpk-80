@@ -23,7 +23,7 @@ private:
     void(emulator::*cmd_methods[72])(void);
 
 
-
+    //accum
     hexes A;
 
 
@@ -58,6 +58,7 @@ private:
 
     void SUI();
 
+    int hex_couple_to_int(hexes &A1, hexes &A2);
 
 
     //mov
@@ -156,21 +157,6 @@ private:
     //SUB m
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     //mvi
 
     //flags
@@ -181,6 +167,11 @@ private:
 
     void init_umpk_cmd_list();
 public:
+
+
+    hexes& get_cell(hexes &A1, hexes &A2);
+
+    void set_add(hexes &A1, hexes &A2, hexes &value);
 
     int point;
 

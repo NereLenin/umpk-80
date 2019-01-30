@@ -414,3 +414,44 @@ void emulator::SUI(){
     SUB(list[point]);
     point++;
 }
+
+
+int emulator::hex_couple_to_int(hexes &A1, hexes &A2)
+{
+    std::bitset<16> *temp = new std::bitset<16>;
+
+    for(unsigned long i=0;i<8;i++)
+        temp->operator[](i) = A2.b[i];
+
+    for(unsigned long i=8;i<16;i++)
+        temp->operator[](i) = A1.b[i-8];
+
+    int new_point = static_cast<int>(temp->to_ulong());
+
+    delete temp;
+
+    if(new_point <2048 || new_point>2944)
+    {
+        std::cout << "adress not exist" << std::endl;
+        return 0;
+    }
+
+    new_point-=2048;
+    return new_point;
+}
+
+
+void emulator::set_add(hexes &A1, hexes &A2, hexes &value)
+{
+    int new_point = hex_couple_to_int(A1,A2);
+
+    list[new_point] = value;
+
+}
+
+hexes &emulator::get_cell(hexes &A1, hexes &A2)
+{
+    int new_point = hex_couple_to_int(A1,A2);
+    return  list[new_point];
+}
+
