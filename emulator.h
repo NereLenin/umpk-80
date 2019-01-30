@@ -20,11 +20,12 @@ private:
 //    typedef void (emulator::*srch_fnc)(void);
 //    srch_fnc cmd_methods[3];
 
-    void(emulator::*cmd_methods[63])(void);
+    void(emulator::*cmd_methods[72])(void);
 
 
 
     hexes A;
+
 
     //couple BC
     hexes B,C;

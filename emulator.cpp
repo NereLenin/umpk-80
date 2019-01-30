@@ -345,6 +345,7 @@ void emulator::init_umpk_cmd_list()
 /*
     std::cout << all_cmd << std::endl;
 */
+
 }
 
 void emulator::iteration()
@@ -353,9 +354,12 @@ void emulator::iteration()
         if(list[point] == umpk_cmd_list[i])//
         {
             (this->*cmd_methods[i])();
+
+            if(A==0) Z=1;
+            else Z=0;
+
             return;
         }
-
 
     std::cout << "cmd not found" << std::endl;
 
@@ -379,23 +383,29 @@ void emulator::MVI(hexes& R){
 
 void emulator::ADD(hexes& R)
 {
+    if(A.to_int() + R.to_int()>255) Cy=1;
+
     A = (A+R);
-    if(A.to_int() + R.to_int()>255)
-        C=1;
+
     point++;
 }
 
 void emulator::ADI(){
     point++;
+
     ADD(list[point]);
+
     point++;
 }
 
 void emulator::SUB(hexes& R)
 {
-    A = (A+R);
     if(A.to_int() - R.to_int()<0)
-        C=1;
+        Cy=1;
+
+    A = (A-R);
+
+
     point++;
 }
 
