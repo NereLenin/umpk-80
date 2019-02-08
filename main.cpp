@@ -9,8 +9,8 @@ using namespace std;
 int main()
 {
 
-    hexes one("08");
-    hexes two("00");
+    hexes one("FF");
+    hexes two("FF");
 
     hexes value("FF");
 
@@ -21,9 +21,11 @@ int main()
     test.add_cmd("03");
     test.add_cmd("04");
 
-    test.set_add(one,two,value);
+    one.print_hex();
+    two.print_hex();
 
-    test.print_list();
+   // test.set_add(one,two,value);
+ //   test.print_list();
     //test.add_cmd("2E");
     //test.add_cmd("FF");
    // test.add_cmd("85");

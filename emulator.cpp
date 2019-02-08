@@ -109,10 +109,8 @@ void emulator::init_umpk_cmd_list()
     umpk_cmd_list.add("7D");
     add_cmd_methods(all_cmd,(&emulator::MOV_A_L));
 
-
-
-
-    //MOV A,M
+    umpk_cmd_list.add("7E");
+    add_cmd_methods(all_cmd,(&emulator::MOV_A_M));//MOV A,M
 
     //MOV B
 
@@ -136,7 +134,9 @@ void emulator::init_umpk_cmd_list()
 
     umpk_cmd_list.add("45");
     add_cmd_methods(all_cmd,(&emulator::MOV_B_L));
-    //MOV B,M
+
+    umpk_cmd_list.add("46");
+    add_cmd_methods(all_cmd,(&emulator::MOV_B_M));//MOV B,M
 
 
     //MOV C
@@ -161,7 +161,9 @@ void emulator::init_umpk_cmd_list()
 
     umpk_cmd_list.add("4D");
     add_cmd_methods(all_cmd,(&emulator::MOV_C_L));
-    //MOV C,M
+
+    umpk_cmd_list.add("4E");
+    add_cmd_methods(all_cmd,(&emulator::MOV_C_M));//MOV C,M
 
     //MOV D
 
@@ -185,7 +187,9 @@ void emulator::init_umpk_cmd_list()
 
     umpk_cmd_list.add("55");
     add_cmd_methods(all_cmd,(&emulator::MOV_D_L));
-    //MOV D,M
+
+    umpk_cmd_list.add("56");
+    add_cmd_methods(all_cmd,(&emulator::MOV_D_M));//MOV D,M
 
 
     //MOV E
@@ -210,7 +214,9 @@ void emulator::init_umpk_cmd_list()
 
     umpk_cmd_list.add("5D");
     add_cmd_methods(all_cmd,(&emulator::MOV_E_L));
-    //MOV E,M
+
+    umpk_cmd_list.add("5E");
+    add_cmd_methods(all_cmd,(&emulator::MOV_E_M));//MOV E,M
 
 
     //MOV H
@@ -235,7 +241,9 @@ void emulator::init_umpk_cmd_list()
 
     umpk_cmd_list.add("65");
     add_cmd_methods(all_cmd,(&emulator::MOV_H_L));
-    //MOV H,M
+
+    umpk_cmd_list.add("66");
+    add_cmd_methods(all_cmd,(&emulator::MOV_H_M));//MOV H,M
 
     //MOV L
 
@@ -259,10 +267,32 @@ void emulator::init_umpk_cmd_list()
 
     umpk_cmd_list.add("6D");
     add_cmd_methods(all_cmd,(&emulator::MOV_L_L));
-    //MOV L,M
+
+    umpk_cmd_list.add("6E");
+    add_cmd_methods(all_cmd,(&emulator::MOV_L_M));//MOV L,M
 
     //MOV M
 
+    umpk_cmd_list.add("77");
+    add_cmd_methods(all_cmd,(&emulator::MOV_M_A));
+
+    umpk_cmd_list.add("70");
+    add_cmd_methods(all_cmd,(&emulator::MOV_M_B));
+
+    umpk_cmd_list.add("71");
+    add_cmd_methods(all_cmd,(&emulator::MOV_M_C));
+
+    umpk_cmd_list.add("72");
+    add_cmd_methods(all_cmd,(&emulator::MOV_M_D));
+
+    umpk_cmd_list.add("73");
+    add_cmd_methods(all_cmd,(&emulator::MOV_M_E));
+
+    umpk_cmd_list.add("74");
+    add_cmd_methods(all_cmd,(&emulator::MOV_M_H));
+
+    umpk_cmd_list.add("75");
+    add_cmd_methods(all_cmd,(&emulator::MOV_M_L));
 
     //MVI R
     umpk_cmd_list.add("3E");
@@ -285,7 +315,9 @@ void emulator::init_umpk_cmd_list()
 
     umpk_cmd_list.add("2E");
     add_cmd_methods(all_cmd,(&emulator::MVI_L));
-    //MVI M
+
+    umpk_cmd_list.add("36");
+    add_cmd_methods(all_cmd,(&emulator::MVI_M));//MVI M
 
     //ADD R
     umpk_cmd_list.add("87");
@@ -308,9 +340,11 @@ void emulator::init_umpk_cmd_list()
 
     umpk_cmd_list.add("85");
     add_cmd_methods(all_cmd,(&emulator::ADD_L));
-    //ADD M
 
+    umpk_cmd_list.add("86");
+    add_cmd_methods(all_cmd,(&emulator::ADD_M));//ADD M
 
+    //ADI
     umpk_cmd_list.add("C6");
     add_cmd_methods(all_cmd,(&emulator::ADI));
 
@@ -336,15 +370,50 @@ void emulator::init_umpk_cmd_list()
 
     umpk_cmd_list.add("95");
     add_cmd_methods(all_cmd,(&emulator::SUB_L));
-    //sub m
 
-    umpk_cmd_list.add("D6");
-    add_cmd_methods(all_cmd,(&emulator::SUI));
+    umpk_cmd_list.add("96");
+    add_cmd_methods(all_cmd,(&emulator::SUB_M));//sub m
+
+    //DCR R
+    umpk_cmd_list.add("3D");
+    add_cmd_methods(all_cmd,(&emulator::DCR_A));
+
+    umpk_cmd_list.add("05");
+    add_cmd_methods(all_cmd,(&emulator::DCR_B));
+
+    umpk_cmd_list.add("0D");
+    add_cmd_methods(all_cmd,(&emulator::DCR_C));
+
+    umpk_cmd_list.add("15");
+    add_cmd_methods(all_cmd,(&emulator::DCR_D));
+
+    umpk_cmd_list.add("1D");
+    add_cmd_methods(all_cmd,(&emulator::DCR_E));
+
+    umpk_cmd_list.add("25");
+    add_cmd_methods(all_cmd,(&emulator::DCR_H));
+
+    umpk_cmd_list.add("2D");
+    add_cmd_methods(all_cmd,(&emulator::DCR_L));
+
+    umpk_cmd_list.add("35");
+    add_cmd_methods(all_cmd,(&emulator::DCR_M));//DCR m
 
 
-/*
-    std::cout << all_cmd << std::endl;
-*/
+    //DCX R
+    umpk_cmd_list.add("0B");
+    add_cmd_methods(all_cmd,(&emulator::DCX_B));
+
+    umpk_cmd_list.add("1B");
+    add_cmd_methods(all_cmd,(&emulator::DCX_D));
+
+    umpk_cmd_list.add("2B");
+    add_cmd_methods(all_cmd,(&emulator::DCX_H));
+
+    //DCX SP
+
+   // std::cout << all_cmd << std::endl;
+
 
 }
 
@@ -415,6 +484,9 @@ void emulator::SUI(){
     point++;
 }
 
+void emulator::DCR(hexes& R){
+   R = R + 1;
+}
 
 int emulator::hex_couple_to_int(hexes &A1, hexes &A2)
 {
@@ -433,25 +505,52 @@ int emulator::hex_couple_to_int(hexes &A1, hexes &A2)
     if(new_point <2048 || new_point>2944)
     {
         std::cout << "adress not exist" << std::endl;
-        return 0;
+        return -1;
     }
 
     new_point-=2048;
     return new_point;
 }
 
+void emulator::dcr_hex_couple(hexes &A1, hexes &A2)
+{
+    std::bitset<16> *temp = new std::bitset<16>;
+
+    for(unsigned long i=0;i<8;i++)
+        temp->operator[](i) = A2.b[i];
+
+    for(unsigned long i=8;i<16;i++)
+        temp->operator[](i) = A1.b[i-8];
+
+    *temp = temp->to_ulong() + 1;
+
+    for(unsigned long i=0;i<8;i++)
+        A2.b[i] = temp->operator[](i);
+
+    for(unsigned long i=8;i<16;i++)
+        A1.b[i-8] = temp->operator[](i);
+
+    delete temp;
+}
 
 void emulator::set_add(hexes &A1, hexes &A2, hexes &value)
 {
     int new_point = hex_couple_to_int(A1,A2);
-
-    list[new_point] = value;
-
+    if(new_point < 0)
+        std::cout << "Нет такого адресса" << std::endl;
+    else
+        list[new_point] = value;
 }
 
 hexes &emulator::get_cell(hexes &A1, hexes &A2)
 {
     int new_point = hex_couple_to_int(A1,A2);
-    return  list[new_point];
+    if(new_point < 0)
+    {
+        std::cout << "Нет такого адресса" << std::endl;
+        return  list[point];
+    }
+    else
+    return list[new_point];
 }
 

@@ -20,8 +20,7 @@ private:
 //    typedef void (emulator::*srch_fnc)(void);
 //    srch_fnc cmd_methods[3];
 
-    void(emulator::*cmd_methods[72])(void);
-
+    void(emulator::*cmd_methods[99])(void);
 
     //accum
     hexes A;
@@ -58,6 +57,8 @@ private:
 
     void SUI();
 
+    void DCR(hexes& R);
+
     int hex_couple_to_int(hexes &A1, hexes &A2);
 
 
@@ -70,7 +71,7 @@ private:
     void MOV_A_E() { MOV(A,E);}
     void MOV_A_H() { MOV(A,H);}
     void MOV_A_L() { MOV(A,B);}
-    //mov a m
+    void MOV_A_M() { MOV(A, get_cell(H,L));}//mov a m
 
     void MOV_B_A() { MOV(B,A);}
     void MOV_B_B() { MOV(B,B);}
@@ -79,7 +80,7 @@ private:
     void MOV_B_E() { MOV(B,E);}
     void MOV_B_H() { MOV(B,H);}
     void MOV_B_L() { MOV(B,L);}
-    //mov b m
+    void MOV_B_M() { MOV(B, get_cell(H,L));}//mov b m
 
     void MOV_C_A() { MOV(C,A);}
     void MOV_C_B() { MOV(C,B);}
@@ -88,7 +89,7 @@ private:
     void MOV_C_E() { MOV(C,E);}
     void MOV_C_H() { MOV(C,H);}
     void MOV_C_L() { MOV(C,L);}
-    //mov c m
+    void MOV_C_M() { MOV(C, get_cell(H,L));}//mov c m
 
     void MOV_D_A() { MOV(D,A);}
     void MOV_D_B() { MOV(D,B);}
@@ -97,7 +98,7 @@ private:
     void MOV_D_E() { MOV(D,E);}
     void MOV_D_H() { MOV(D,H);}
     void MOV_D_L() { MOV(D,L);}
-    // mov d m
+    void MOV_D_M() { MOV(D, get_cell(H,L));}    // mov d m
 
     void MOV_E_A() { MOV(E,A);}
     void MOV_E_B() { MOV(E,B);}
@@ -106,7 +107,7 @@ private:
     void MOV_E_E() { MOV(E,E);}
     void MOV_E_H() { MOV(E,H);}
     void MOV_E_L() { MOV(E,L);}
-    //mov e m
+    void MOV_E_M() { MOV(E, get_cell(H,L));}//mov e m
 
     void MOV_H_A() { MOV(H,A);}
     void MOV_H_B() { MOV(H,B);}
@@ -115,7 +116,7 @@ private:
     void MOV_H_E() { MOV(H,E);}
     void MOV_H_H() { MOV(H,H);}
     void MOV_H_L() { MOV(H,L);}
-    //mov h m
+    void MOV_H_M() { MOV(H, get_cell(H,L));}//mov h m
 
     void MOV_L_A() { MOV(L,A);}
     void MOV_L_B() { MOV(L,B);}
@@ -124,9 +125,16 @@ private:
     void MOV_L_E() { MOV(L,E);}
     void MOV_L_H() { MOV(L,H);}
     void MOV_L_L() { MOV(L,L);}
-    //mov l m
+    void MOV_L_M() { MOV(L, get_cell(H,L));}//mov l m
 
     // mov m r
+    void MOV_M_A() { set_add(H,L,A);}
+    void MOV_M_B() { set_add(H,L,B);}
+    void MOV_M_C() { set_add(H,L,C);}
+    void MOV_M_D() { set_add(H,L,D);}
+    void MOV_M_E() { set_add(H,L,E);}
+    void MOV_M_H() { set_add(H,L,H);}
+    void MOV_M_L() { set_add(H,L,L);}
 
     void MVI_A() { MVI(A);}
     void MVI_B() { MVI(B);}
@@ -135,6 +143,7 @@ private:
     void MVI_E() { MVI(E);}
     void MVI_H() { MVI(H);}
     void MVI_L() { MVI(L);}
+    void MVI_M() { MVI(get_cell(H,L));}
     //mvi m
 
     void ADD_A() { ADD(A);}
@@ -144,6 +153,7 @@ private:
     void ADD_E() { ADD(E);}
     void ADD_H() { ADD(H);}
     void ADD_L() { ADD(L);}
+    void ADD_M() { ADD(get_cell(H,L));}
     //add m
 
 
@@ -154,10 +164,28 @@ private:
     void SUB_E() { SUB(E);}
     void SUB_H() { SUB(H);}
     void SUB_L() { SUB(L);}
+    void SUB_M() { SUB(get_cell(H,L));}
     //SUB m
 
+    //DCR
+    void DCR_A() { DCR(A);}
+    void DCR_B() { DCR(B);}
+    void DCR_C() { DCR(C);}
+    void DCR_D() { DCR(D);}
+    void DCR_E() { DCR(E);}
+    void DCR_H() { DCR(H);}
+    void DCR_L() { DCR(L);}
+    void DCR_M() { DCR(get_cell(H,L));}
 
-    //mvi
+    //DCX
+
+    void DCX_B(){dcr_hex_couple(B,C);}
+
+    void DCX_D(){dcr_hex_couple(D,E);}
+
+    void DCX_H(){dcr_hex_couple(H,L);}
+
+    //void DCX_SP(){dcr_hex_couple(H,L);}
 
     //flags
     bool Cy;
@@ -166,12 +194,13 @@ private:
 
 
     void init_umpk_cmd_list();
-public:
-
+    void dcr_hex_couple(hexes &A1, hexes &A2);
 
     hexes& get_cell(hexes &A1, hexes &A2);
 
     void set_add(hexes &A1, hexes &A2, hexes &value);
+
+public:
 
     int point;
 
