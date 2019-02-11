@@ -20,7 +20,7 @@ private:
 //    typedef void (emulator::*srch_fnc)(void);
 //    srch_fnc cmd_methods[3];
 
-    void(emulator::*cmd_methods[99])(void);
+    void(emulator::*cmd_methods[124])(void);
 
     //accum
     hexes A;
@@ -42,8 +42,19 @@ private:
     {
         cmd_methods[all_cmd] = func;
         all_cmd++;
-
     }
+
+
+    void init_umpk_cmd_list();
+
+    void dcr_hex_couple(hexes &A1, hexes &A2);
+    void inr_hex_couple(hexes &A1, hexes &A2);
+
+    hexes& get_cell(hexes &A1, hexes &A2);
+
+    void set_add(hexes &A1, hexes &A2, hexes &value);
+    void JMP(const bool &flag);
+
 
     void MOV(hexes& R1,hexes& R2);//p
 
@@ -57,7 +68,21 @@ private:
 
     void SUI();
 
-    void DCR(hexes& R);
+    void DCR(hexes &R);
+    void INR(hexes &R);
+
+    void LDA();
+
+    void STA();
+
+    void LXI(hexes &R1, hexes &R2);
+
+    void LDAX(hexes &R1, hexes &R2);
+    void STAX(hexes &R1, hexes &R2);
+
+
+
+
 
     int hex_couple_to_int(hexes &A1, hexes &A2);
 
@@ -184,8 +209,61 @@ private:
     void DCX_D(){dcr_hex_couple(D,E);}
 
     void DCX_H(){dcr_hex_couple(H,L);}
+    //dcx sp
 
-    //void DCX_SP(){dcr_hex_couple(H,L);}
+    //INR
+    void INR_A() { INR(A);}
+    void INR_B() { INR(B);}
+    void INR_C() { INR(C);}
+    void INR_D() { INR(D);}
+    void INR_E() { INR(E);}
+    void INR_H() { INR(H);}
+    void INR_L() { INR(L);}
+    void INR_M() { INR(get_cell(H,L));}
+
+    //DCX
+
+    void INX_B(){inr_hex_couple(B,C);}
+
+    void INX_D(){inr_hex_couple(D,E);}
+
+    void INX_H(){inr_hex_couple(H,L);}
+    //inx sp
+
+    //lxi
+    void LXI_B(){LXI(B,C);}
+    void LXI_D(){LXI(D,E);}
+    void LXI_H(){LXI(H,L);}
+    //void LXI_SP
+
+    //ldax
+
+    void LDAX_B(){LDAX(B,C);}
+    void LDAX_D(){LDAX(D,E);}
+
+    //stax
+
+    void STAX_B(){LDAX(B,C);}
+    void STAX_D(){LDAX(D,E);}
+
+    //lhld
+
+
+    //shld
+
+
+    //xchg
+
+
+    //jamp
+
+    void JZ(){JMP(Z);}
+    void JNZ(){JMP(!Z);}
+
+    void JC(){ JMP(Cy); }
+    void JNC(){ JMP(!Cy); }
+
+    void JMP();
 
     //flags
     bool Cy;
@@ -193,12 +271,6 @@ private:
     bool P;
 
 
-    void init_umpk_cmd_list();
-    void dcr_hex_couple(hexes &A1, hexes &A2);
-
-    hexes& get_cell(hexes &A1, hexes &A2);
-
-    void set_add(hexes &A1, hexes &A2, hexes &value);
 
 public:
 

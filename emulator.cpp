@@ -412,7 +412,105 @@ void emulator::init_umpk_cmd_list()
 
     //DCX SP
 
-   // std::cout << all_cmd << std::endl;
+    //INR R
+    umpk_cmd_list.add("3C");
+    add_cmd_methods(all_cmd,(&emulator::INR_A));
+
+    umpk_cmd_list.add("04");
+    add_cmd_methods(all_cmd,(&emulator::INR_B));
+
+    umpk_cmd_list.add("0C");
+    add_cmd_methods(all_cmd,(&emulator::INR_C));
+
+    umpk_cmd_list.add("14");
+    add_cmd_methods(all_cmd,(&emulator::INR_D));
+
+    umpk_cmd_list.add("1C");
+    add_cmd_methods(all_cmd,(&emulator::INR_E));
+
+    umpk_cmd_list.add("24");
+    add_cmd_methods(all_cmd,(&emulator::INR_H));
+
+    umpk_cmd_list.add("2C");
+    add_cmd_methods(all_cmd,(&emulator::INR_L));
+
+    umpk_cmd_list.add("34");
+    add_cmd_methods(all_cmd,(&emulator::INR_M));//DCR m
+
+
+    //INX R
+    umpk_cmd_list.add("03");
+    add_cmd_methods(all_cmd,(&emulator::INX_B));
+
+    umpk_cmd_list.add("13");
+    add_cmd_methods(all_cmd,(&emulator::INX_D));
+
+    umpk_cmd_list.add("23");
+    add_cmd_methods(all_cmd,(&emulator::INX_H));
+
+    //INX SP
+
+
+
+    //lda
+    umpk_cmd_list.add("3A");
+    add_cmd_methods(all_cmd,(&emulator::LDA));
+
+    //sta
+    umpk_cmd_list.add("32");
+    add_cmd_methods(all_cmd,(&emulator::STA));
+
+   //lxi
+    umpk_cmd_list.add("01");
+    add_cmd_methods(all_cmd,(&emulator::LXI_B));
+
+    umpk_cmd_list.add("11");
+    add_cmd_methods(all_cmd,(&emulator::LXI_D));
+
+    umpk_cmd_list.add("21");
+    add_cmd_methods(all_cmd,(&emulator::LXI_H));
+    //lxi sp
+
+    //ldax
+
+    umpk_cmd_list.add("0A");
+    add_cmd_methods(all_cmd,(&emulator::LDAX_B));
+
+    umpk_cmd_list.add("1A");
+    add_cmd_methods(all_cmd,(&emulator::LDAX_D));
+
+    //stax
+
+    umpk_cmd_list.add("02");
+    add_cmd_methods(all_cmd,(&emulator::STAX_B));
+
+    umpk_cmd_list.add("12");
+    add_cmd_methods(all_cmd,(&emulator::STAX_D));
+
+
+    //jz
+
+    umpk_cmd_list.add("CA");
+    add_cmd_methods(all_cmd,(&emulator::JZ));
+
+    //jnz
+    umpk_cmd_list.add("C2");
+    add_cmd_methods(all_cmd,(&emulator::JNZ));
+
+    //jc
+    umpk_cmd_list.add("DA");
+    add_cmd_methods(all_cmd,(&emulator::JC));
+
+    //jnc
+    umpk_cmd_list.add("D2");
+    add_cmd_methods(all_cmd,(&emulator::JNC));
+
+    //jmp
+    umpk_cmd_list.add("C3");
+    add_cmd_methods(all_cmd,(&emulator::JMP));
+
+
+    std::cout << all_cmd << std::endl;
 
 
 }
@@ -487,6 +585,90 @@ void emulator::SUI(){
 void emulator::DCR(hexes& R){
    R = R + 1;
 }
+void emulator::INR(hexes& R){
+   R = R - 1;
+}
+void emulator::LDA()
+{
+    hexes *t_R1 = new hexes;
+    hexes *t_R2 = new hexes;
+    point++;
+    *t_R2 = list[point];
+    point++;
+    *t_R1 = list[point];
+    point++;
+    A = get_cell(*t_R1, *t_R2);
+
+    delete t_R1; delete t_R2;
+}
+
+void emulator::STA()
+{
+    hexes *t_R1 = new hexes;
+    hexes *t_R2 = new hexes;
+    point++;
+    *t_R2 = list[point];
+    point++;
+    *t_R1 = list[point];
+    point++;
+    get_cell(*t_R1, *t_R2) = A;
+
+    delete t_R1; delete t_R2;
+}
+ 
+
+void emulator::LXI(hexes &R1, hexes &R2)
+{
+    point++;
+    R2 = list[point];
+    point++;
+    R1 = list[point];
+    point++;
+}
+
+
+void emulator::LDAX(hexes &R1, hexes &R2)
+{
+        A = get_cell(R1,R2);
+}
+
+void emulator::STAX(hexes &R1, hexes &R2)
+{
+        get_cell(R1,R2) = A;
+}
+
+void emulator::JMP()
+{
+    hexes *t_R1 = new hexes;
+    hexes *t_R2 = new hexes;
+    point++;
+    *t_R2 = list[point];
+    point++;
+    *t_R1 = list[point];
+    point++;
+
+    point = hex_couple_to_int(*t_R1,*t_R2);
+
+    delete t_R1; delete t_R2;
+}
+
+void emulator::JMP(const bool &flag)
+{
+    if(flag)
+    {
+    hexes *t_R1 = new hexes;
+    hexes *t_R2 = new hexes;
+    point++;
+    *t_R2 = list[point];
+    point++;
+    *t_R1 = list[point];
+    point++;
+
+    point = hex_couple_to_int(*t_R1,*t_R2);
+
+    delete t_R1; delete t_R2;
+    }
+}
 
 int emulator::hex_couple_to_int(hexes &A1, hexes &A2)
 {
@@ -523,6 +705,27 @@ void emulator::dcr_hex_couple(hexes &A1, hexes &A2)
         temp->operator[](i) = A1.b[i-8];
 
     *temp = temp->to_ulong() + 1;
+
+    for(unsigned long i=0;i<8;i++)
+        A2.b[i] = temp->operator[](i);
+
+    for(unsigned long i=8;i<16;i++)
+        A1.b[i-8] = temp->operator[](i);
+
+    delete temp;
+}
+
+void emulator::inr_hex_couple(hexes &A1, hexes &A2)
+{
+    std::bitset<16> *temp = new std::bitset<16>;
+
+    for(unsigned long i=0;i<8;i++)
+        temp->operator[](i) = A2.b[i];
+
+    for(unsigned long i=8;i<16;i++)
+        temp->operator[](i) = A1.b[i-8];
+
+    *temp = temp->to_ulong() - 1;
 
     for(unsigned long i=0;i<8;i++)
         A2.b[i] = temp->operator[](i);
