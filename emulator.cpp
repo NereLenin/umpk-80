@@ -25,6 +25,7 @@ emulator::emulator()
 
     init_umpk_cmd_list();
 
+    stop_flag = 0;
 }
 
 
@@ -535,6 +536,9 @@ void emulator::init_umpk_cmd_list()
     umpk_cmd_list.add("C3");
     add_cmd_methods(all_cmd,(&emulator::JMP));
 
+    //RST1
+    umpk_cmd_list.add("CF");
+    add_cmd_methods(all_cmd,(&emulator::RST1));
 
  //   std::cout << all_cmd << std::endl;
 
@@ -545,12 +549,10 @@ void emulator::iteration()
 {
      for(int i =0; i<all_cmd; i++)//проходим по всем командам
     {
-        if(list[point] == "CF")
-            break;
 
         if(list[point] == umpk_cmd_list[i])//
         {
-            std::cout << std::endl <<  "point " << point << std::endl;
+          //  std::cout << std::endl <<  "point " << point << std::endl;
 
             (this->*cmd_methods[i])();
 
@@ -567,10 +569,9 @@ void emulator::iteration()
 void emulator::start()
 {
     int i=0;
-    for(i=0; i<1000;i++)
+    for(i=0; i<1000 && !stop_flag;i++)
     {
-        if(list[point] == "CF")
-            break;
+
 
         iteration();
        // print_flags();
@@ -744,6 +745,13 @@ void emulator::JMP(const bool &flag)
     delete t_R1; delete t_R2;
     }
     else point+=3;
+}
+
+
+void emulator::RST1()
+{
+    point = 0;
+    stop_flag = 1;
 }
 
 int emulator::hex_couple_to_int(hexes &A1, hexes &A2)

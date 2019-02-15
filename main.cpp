@@ -61,7 +61,7 @@ int main()
 */
     test.start();
 
-//    test.print_list();
+    test.print_list();
 
     return 0;
 }

@@ -20,7 +20,9 @@ private:
 //    typedef void (emulator::*srch_fnc)(void);
 //    srch_fnc cmd_methods[3];
 
-    void(emulator::*cmd_methods[124])(void);
+    void(emulator::*cmd_methods[125])(void);
+
+    bool stop_flag;
 
     //accum
     hexes A;
@@ -81,6 +83,8 @@ private:
 
     void LDAX(hexes &R1, hexes &R2);
     void STAX(hexes &R1, hexes &R2);
+
+    void RST1();
 
 
 
