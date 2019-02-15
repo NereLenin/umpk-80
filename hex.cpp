@@ -15,7 +15,7 @@ hexes::hexes()
 
 hexes::hexes(const unsigned long& value)
 {
-    if(value>255) cout << "not more than 255 plz" << endl;
+    if(value>255) cout << "no more than 255 plz" << endl;
     b = value;
 }
 

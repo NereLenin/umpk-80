@@ -573,6 +573,8 @@ void emulator::start()
             break;
 
         iteration();
+       // print_flags();
+       // print_registers();
     }
 
     std::cout << std::endl <<  "count iteration " << i << std::endl;
@@ -629,21 +631,31 @@ void emulator::SUI(){
 }
 
 void emulator::INR(hexes& R){
-    if(R.to_int() + 1 > 255)
+    if(R == 255)
      {
         Cy = 1;
-        Z=1;
     }
     R = (R + 1);
+
+    if(R == 0)
+     {
+        Z=1;
+     }
+
         point++;
 }
 void emulator::DCR(hexes& R){
     if(R == 0)
      {
         Cy = 1;
-        Z=1;
      }
      R = (R - 1);
+
+     if(R == 0)
+      {
+         Z=1;
+      }
+
     point++;
 }
 void emulator::LDA()
@@ -768,12 +780,19 @@ void emulator::dcr_hex_couple(hexes &A1, hexes &A2)
     for(unsigned long i=8;i<16;i++)
         temp->operator[](i) = A1.b[i-8];
 
-    if(temp->to_ulong() == 0)
+    if(*temp == 0)
     {
         Cy = 1;
-        Z=1;
+        *temp = 0;
     }
+    else
     *temp = temp->to_ulong() - 1;
+
+
+    if(*temp == 0)
+    {
+        Z = 1;
+    }
 
     for(unsigned long i=0;i<8;i++)
         A2.b[i] = temp->operator[](i);
@@ -794,14 +813,18 @@ void emulator::inr_hex_couple(hexes &A1, hexes &A2)
     for(unsigned long i=8;i<16;i++)
         temp->operator[](i) = A1.b[i-8];
 
-    if(temp->to_ulong() == 255)
+    if(*temp == 255)
     {
         Cy = 1;
-        Z=1;
+        *temp = 0;
     }
+    else
     *temp = temp->to_ulong() + 1;
 
-
+    if(*temp == 0)
+    {
+      Z=1;
+    }
 
     for(unsigned long i=0;i<8;i++)
         A2.b[i] = temp->operator[](i);
