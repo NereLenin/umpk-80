@@ -1,6 +1,33 @@
 #include "emulator.h"
 
 
+emulator::emulator()
+{
+    A = 0;
+
+    B = 0;
+    C = 0;
+
+    D = 0;
+    E = 0;
+
+    H = 0;
+    L = 0;
+
+    Cy = Z = P = 0;
+
+    point = 0;
+
+    all_cmd = 0;
+
+    for(int i=0;i<=896;i++)
+        add_cmd(0);
+
+    init_umpk_cmd_list();
+
+}
+
+
 void emulator::print_registers()
 {
     std::cout << "A: ";
@@ -52,28 +79,27 @@ void emulator::add_cmd(const char* value)
     list.add(value);
 }
 
-
-emulator::emulator()
+void emulator::add_cmd(const char* addr, const char* value)
 {
-    A = 0;
+    char *one = new char[2];
+    char *two = new char[2];
 
-    B = 0;
-    C = 0;
+    one[0] = addr[0];one[1] = addr[1];
+    two[0] = addr[2];two[1]=addr[3];
 
-    D = 0;
-    E = 0;
+    hexes *R1 = new hexes(one);
+    hexes *R2 = new hexes(two);
+    hexes *cmd = new hexes(value);
 
-    H = 0;
-    L = 0;
+    list[hex_couple_to_int(*R1,*R2)] = *cmd;
 
-    Cy = Z = P = 0;
-
-    point = 0;
-
-    all_cmd = 0;
-    init_umpk_cmd_list();
-
+    delete R1;
+    delete R2;
+    delete cmd;
+    delete[] one;
+    delete[] two;
 }
+
 
 void emulator::print_list()
 {
@@ -510,26 +536,46 @@ void emulator::init_umpk_cmd_list()
     add_cmd_methods(all_cmd,(&emulator::JMP));
 
 
-    std::cout << all_cmd << std::endl;
+ //   std::cout << all_cmd << std::endl;
 
 
 }
 
 void emulator::iteration()
 {
-    for(int i =0; i<all_cmd; i++)//проходим по всем командам
+     for(int i =0; i<all_cmd; i++)//проходим по всем командам
+    {
+        if(list[point] == "CF")
+            break;
+
         if(list[point] == umpk_cmd_list[i])//
         {
+            std::cout << std::endl <<  "point " << point << std::endl;
+
             (this->*cmd_methods[i])();
 
-            if(A==0) Z=1;
-            else Z=0;
+            //if(A==0) Z=1;
+            //else Z=0;
 
             return;
         }
+    }
+    std::cout << "cmd on " << point <<  " not found" << std::endl;
 
-    std::cout << "cmd not found" << std::endl;
+}
 
+void emulator::start()
+{
+    int i=0;
+    for(i=0; i<1000;i++)
+    {
+        if(list[point] == "CF")
+            break;
+
+        iteration();
+    }
+
+    std::cout << std::endl <<  "count iteration " << i << std::endl;
 }
 
 
@@ -582,11 +628,23 @@ void emulator::SUI(){
     point++;
 }
 
-void emulator::DCR(hexes& R){
-   R = R + 1;
-}
 void emulator::INR(hexes& R){
-   R = R - 1;
+    if(R.to_int() + 1 > 255)
+     {
+        Cy = 1;
+        Z=1;
+    }
+    R = (R + 1);
+        point++;
+}
+void emulator::DCR(hexes& R){
+    if(R == 0)
+     {
+        Cy = 1;
+        Z=1;
+     }
+     R = (R - 1);
+    point++;
 }
 void emulator::LDA()
 {
@@ -600,6 +658,7 @@ void emulator::LDA()
     A = get_cell(*t_R1, *t_R2);
 
     delete t_R1; delete t_R2;
+        point++;
 }
 
 void emulator::STA()
@@ -614,6 +673,7 @@ void emulator::STA()
     get_cell(*t_R1, *t_R2) = A;
 
     delete t_R1; delete t_R2;
+        point++;
 }
  
 
@@ -630,11 +690,13 @@ void emulator::LXI(hexes &R1, hexes &R2)
 void emulator::LDAX(hexes &R1, hexes &R2)
 {
         A = get_cell(R1,R2);
+            point++;
 }
 
 void emulator::STAX(hexes &R1, hexes &R2)
 {
         get_cell(R1,R2) = A;
+            point++;
 }
 
 void emulator::JMP()
@@ -650,6 +712,7 @@ void emulator::JMP()
     point = hex_couple_to_int(*t_R1,*t_R2);
 
     delete t_R1; delete t_R2;
+
 }
 
 void emulator::JMP(const bool &flag)
@@ -668,6 +731,7 @@ void emulator::JMP(const bool &flag)
 
     delete t_R1; delete t_R2;
     }
+    else point+=3;
 }
 
 int emulator::hex_couple_to_int(hexes &A1, hexes &A2)
@@ -704,7 +768,12 @@ void emulator::dcr_hex_couple(hexes &A1, hexes &A2)
     for(unsigned long i=8;i<16;i++)
         temp->operator[](i) = A1.b[i-8];
 
-    *temp = temp->to_ulong() + 1;
+    if(temp->to_ulong() == 0)
+    {
+        Cy = 1;
+        Z=1;
+    }
+    *temp = temp->to_ulong() - 1;
 
     for(unsigned long i=0;i<8;i++)
         A2.b[i] = temp->operator[](i);
@@ -725,7 +794,14 @@ void emulator::inr_hex_couple(hexes &A1, hexes &A2)
     for(unsigned long i=8;i<16;i++)
         temp->operator[](i) = A1.b[i-8];
 
-    *temp = temp->to_ulong() - 1;
+    if(temp->to_ulong() == 255)
+    {
+        Cy = 1;
+        Z=1;
+    }
+    *temp = temp->to_ulong() + 1;
+
+
 
     for(unsigned long i=0;i<8;i++)
         A2.b[i] = temp->operator[](i);

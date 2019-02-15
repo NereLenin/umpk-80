@@ -53,6 +53,8 @@ private:
     hexes& get_cell(hexes &A1, hexes &A2);
 
     void set_add(hexes &A1, hexes &A2, hexes &value);
+
+
     void JMP(const bool &flag);
 
 
@@ -204,11 +206,11 @@ private:
 
     //DCX
 
-    void DCX_B(){dcr_hex_couple(B,C);}
+    void DCX_B(){dcr_hex_couple(B,C);point++;}
 
-    void DCX_D(){dcr_hex_couple(D,E);}
+    void DCX_D(){dcr_hex_couple(D,E);point++;}
 
-    void DCX_H(){dcr_hex_couple(H,L);}
+    void DCX_H(){dcr_hex_couple(H,L);point++;}
     //dcx sp
 
     //INR
@@ -223,11 +225,11 @@ private:
 
     //DCX
 
-    void INX_B(){inr_hex_couple(B,C);}
+    void INX_B(){inr_hex_couple(B,C);point++;}
 
-    void INX_D(){inr_hex_couple(D,E);}
+    void INX_D(){inr_hex_couple(D,E);point++;}
 
-    void INX_H(){inr_hex_couple(H,L);}
+    void INX_H(){inr_hex_couple(H,L);point++;}
     //inx sp
 
     //lxi
@@ -270,7 +272,10 @@ private:
     bool Z;
     bool P;
 
-
+    void add_cmd(int);//delete?
+    void add_cmd(const hexes&);
+    void add_cmd(const std::string&);
+    void add_cmd(const char*);
 
 public:
 
@@ -282,10 +287,8 @@ public:
     void add(const command_list&);
     void add_from_file(char *path);
 
-    void add_cmd(int);
-    void add_cmd(const hexes&);
-    void add_cmd(const std::string&);
-    void add_cmd(const char*);
+
+    void add_cmd(const char* addr, const char* value);
 
     void start_from_point();
     void start();

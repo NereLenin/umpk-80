@@ -44,7 +44,7 @@ void command_list::add(const hexes &value){
 void command_list::add(int value){
     hexes *new_cmd = new hexes;
 
-    *new_cmd = static_cast<unsigned long>(value);//?
+    *new_cmd = value;//?
 
     add(*new_cmd);
 
