@@ -51,6 +51,7 @@ public:
 
 
     friend class emulator;
+    //<<
 
 };
 #endif // HEX_H

@@ -1,7 +1,8 @@
 #ifndef EMULATOR_H
 #define EMULATOR_H
 
-#include "hex.h"
+#include "msg_error.h"
+
 #include "command_list.h"
 class emulator;
 

@@ -7,6 +7,7 @@ using namespace std;
 
 
 // constructors
+
 hexes::hexes()
 {
     b = 0;
@@ -29,18 +30,18 @@ hexes::hexes(const char* value)
 // print format
 void hexes::print_bin()
 {
-    cout << b << endl;
+    cout << b;
 }
 
 void hexes::print_int()
 {
-    cout << b.to_ulong() << endl;
+    cout << b.to_ulong();
 }
 
 
 void hexes::print_hex()
 {
-    cout << hex << b.to_ulong() << endl;
+    cout << hex << b.to_ulong();
 }
 
 

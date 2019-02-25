@@ -104,8 +104,10 @@ void command_list::print()
 {
     if(begin==nullptr){ std::cout << "empty list" << std::endl;}
     for(cmd *i = begin; i!=nullptr; i = i->next)
+    {
         i->value_cmd.print_hex();
-
+        std::cout << std::endl;
+    }
 }
 
 

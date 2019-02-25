@@ -569,15 +569,21 @@ void emulator::iteration()
 void emulator::start()
 {
     int i=0;
+    try
+    {
+
     for(i=0; i<1000 && !stop_flag;i++)
     {
 
 
         iteration();
-       // print_flags();
-       // print_registers();
     }
-
+    }
+    catch(msg_address_error *error)
+    {
+        error->print();
+        delete error;
+    }
     std::cout << std::endl <<  "count iteration " << i << std::endl;
 }
 
@@ -770,7 +776,9 @@ int emulator::hex_couple_to_int(hexes &A1, hexes &A2)
 
     if(new_point <2048 || new_point>2944)
     {
+        msg_address_error *new_error = new msg_address_error("Неправильный адресс епта",A1,A2,point);
         std::cout << "adress not exist" << std::endl;
+        throw new_error;
         return -1;
     }
 
@@ -847,7 +855,11 @@ void emulator::set_add(hexes &A1, hexes &A2, hexes &value)
 {
     int new_point = hex_couple_to_int(A1,A2);
     if(new_point < 0)
-        std::cout << "Нет такого адресса" << std::endl;
+    {
+        msg_address_error *new_error = new msg_address_error("Неправильный адресс епта",A1,A2,point);
+        std::cout << "adress not exist" << std::endl;
+        throw new_error;
+    }
     else
         list[new_point] = value;
 }
@@ -857,8 +869,9 @@ hexes &emulator::get_cell(hexes &A1, hexes &A2)
     int new_point = hex_couple_to_int(A1,A2);
     if(new_point < 0)
     {
-        std::cout << "Нет такого адресса" << std::endl;
-        return  list[point];
+        msg_address_error *new_error = new msg_address_error("Неправильный адресс епта",A1,A2,point);
+        std::cout << "adress not exist" << std::endl;
+        throw new_error;
     }
     else
     return list[new_point];

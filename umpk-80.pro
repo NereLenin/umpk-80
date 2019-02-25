@@ -7,9 +7,11 @@ SOURCES += \
         main.cpp \
     hex.cpp \
     command_list.cpp \
-    emulator.cpp
+    emulator.cpp \
+    msg_error.cpp
 
 HEADERS += \
     hex.h \
     command_list.h \
-    emulator.h
+    emulator.h \
+    msg_error.h
