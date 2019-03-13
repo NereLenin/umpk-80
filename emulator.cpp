@@ -627,8 +627,10 @@ void emulator::ADI(){
 
 void emulator::SUB(hexes& R)
 {
-    if(A.to_int() - R.to_int()<0)
-        Cy=1;
+   if(A < R)
+       Cy=1;
+   if(A == R)
+       Z=1;
 
     A = (A-R);
 

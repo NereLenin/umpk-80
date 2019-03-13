@@ -21,7 +21,7 @@ public:
     void print_hex();
     void print_int();
 
-    int to_int();
+    int to_int();//выпилить?
     char* to_char();//выпилить?
 
     void operator = (const hexes&);
@@ -44,11 +44,16 @@ public:
     void c_shift_left (int n);//many shift
     void c_shift_right (int n);
 
+
+
     bool operator == (const char*);//Выпилить?
     bool operator == (int);//выпилить?
 
     bool operator == (const hexes&);//выпилить?
 
+    bool operator < (const hexes&);
+
+    bool operator > (const unsigned long);
 
     friend class emulator;
     //<<

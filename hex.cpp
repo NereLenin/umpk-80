@@ -268,3 +268,13 @@ bool hexes::right_hex_alphabet(const char *value)
 
     return res_one&&res_two;
 }
+
+bool hexes::operator < (const hexes &value)
+{
+    return (b.to_ulong() < value.b.to_ulong());
+}
+
+bool hexes::operator > (const unsigned long value)
+{
+    return (b.to_ulong() > value);
+}
