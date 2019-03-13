@@ -16,7 +16,7 @@ int main()
 
     emulator test;
 
-    test.add_cmd("0800","0E");//mvi c
+    test.add_cmd("0800","10");//mvi c
     test.add_cmd("0801","04");
     test.add_cmd("0802","21");//lxi h
     test.add_cmd("0803","0E");
@@ -30,7 +30,9 @@ int main()
     test.add_cmd("080B","08");
     test.add_cmd("080C","CF");
 
-    /*test.iteration();
+    /*
+
+    test.iteration();
     test.print_flags();
     test.print_registers();
 

@@ -22,7 +22,7 @@ public:
     void print_int();
 
     int to_int();
-    char* to_char();
+    char* to_char();//выпилить?
 
     void operator = (const hexes&);
     void operator = (int value);

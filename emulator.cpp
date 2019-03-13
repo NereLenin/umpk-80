@@ -562,8 +562,8 @@ void emulator::iteration()
             return;
         }
     }
-    std::cout << "cmd on " << point <<  " not found" << std::endl;
-
+    msg_error *not_right_command = new msg_error("Не найдена комманда",point);
+    throw not_right_command;
 }
 
 void emulator::start()
@@ -583,6 +583,11 @@ void emulator::start()
     {
         error->print();
         delete error;
+    }
+    catch(msg_error *error)
+    {
+        error->print();
+        delete  error;
     }
     std::cout << std::endl <<  "count iteration " << i << std::endl;
 }
@@ -779,7 +784,7 @@ int emulator::hex_couple_to_int(hexes &A1, hexes &A2)
         msg_address_error *new_error = new msg_address_error("Неправильный адресс епта",A1,A2,point);
         std::cout << "adress not exist" << std::endl;
         throw new_error;
-        return -1;
+        //return -1;
     }
 
     new_point-=2048;
