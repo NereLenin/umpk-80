@@ -55,6 +55,14 @@ public:
 
     bool operator > (const unsigned long);
 
+    void operator&=( const hexes& );
+
+    void operator|=(  const hexes& );
+
+    void operator^=(  const hexes&  );
+
+    void operator~();
+
     friend class emulator;
     //<<
 

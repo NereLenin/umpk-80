@@ -278,3 +278,23 @@ bool hexes::operator > (const unsigned long value)
 {
     return (b.to_ulong() > value);
 }
+
+void hexes::operator&=( const hexes& value)
+{
+    b &= (value.b);
+}
+
+void hexes::operator|=( const hexes& value)
+{
+    b |= (value.b);
+}
+
+void hexes::operator^=( const hexes& value)
+{
+    b ^= (value.b);
+}
+
+void hexes::operator~()
+{
+    b  = (~b);
+}
