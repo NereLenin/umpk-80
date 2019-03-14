@@ -4,6 +4,9 @@
 #include "msg_error.h"
 
 #include "command_list.h"
+
+#include <stack>
+
 class emulator;
 
 
@@ -41,11 +44,16 @@ private:
     //especial virtual registr
    // hexes M;
 
+    std::stack<hex_couple> emul_stack;
+
+
     void add_cmd_methods(int &all_cmd, void (emulator::*func)() )
     {
         cmd_methods[all_cmd] = func;
         all_cmd++;
     }
+
+
 
 
     void init_umpk_cmd_list();

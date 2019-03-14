@@ -298,3 +298,29 @@ void hexes::operator~()
 {
     b  = (~b);
 }
+
+
+/*-------------------HEXCOUPLE------------------------*/
+
+
+const hexes& hex_couple::get_first()
+{
+    return first_addr;
+}
+
+
+const hexes& hex_couple::get_second()
+{
+    return second_addr;
+}
+
+void hex_couple::set_first(const hexes& value)
+{
+    first_addr = value;
+}
+
+
+void hex_couple::set_second(const hexes& value)
+{
+    second_addr = value;
+}

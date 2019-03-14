@@ -67,4 +67,24 @@ public:
     //<<
 
 };
+
+class hex_couple
+{
+    hexes first_addr;
+    hexes second_addr;
+
+public:
+    const hexes& get_first();
+    const hexes& get_second();
+
+    void set_first(const hexes&);
+    void set_second(const hexes&);
+
+    void print()//выпилить
+    {
+        std::cout << first_addr.to_int() << " " << second_addr.to_int()  << std::endl;
+    }
+
+};
+
 #endif // HEX_H
