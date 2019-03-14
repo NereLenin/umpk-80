@@ -543,6 +543,34 @@ void emulator::init_umpk_cmd_list()
  //   std::cout << all_cmd << std::endl;
 
 
+    //ANA
+    umpk_cmd_list.add("A7");
+    add_cmd_methods(all_cmd,(&emulator::ANA_A));
+
+    umpk_cmd_list.add("A0");
+    add_cmd_methods(all_cmd,(&emulator::ANA_B));
+
+    umpk_cmd_list.add("A1");
+    add_cmd_methods(all_cmd,(&emulator::ANA_C));
+
+    umpk_cmd_list.add("A2");
+    add_cmd_methods(all_cmd,(&emulator::ANA_D));
+
+    umpk_cmd_list.add("A3");
+    add_cmd_methods(all_cmd,(&emulator::ANA_E));
+
+    umpk_cmd_list.add("A4");
+    add_cmd_methods(all_cmd,(&emulator::ANA_H));
+
+    umpk_cmd_list.add("A5");
+    add_cmd_methods(all_cmd,(&emulator::ANA_L));
+
+    umpk_cmd_list.add("A6");
+    add_cmd_methods(all_cmd,(&emulator::ANA_M));
+
+
+
+
 }
 
 void emulator::iteration()
@@ -766,6 +794,12 @@ void emulator::RST1()
     point = 0;
     stop_flag = 1;
 }
+
+ void emulator::ANA(hexes &R)
+ {
+        A&=R;
+ }
+
 
 int emulator::hex_couple_to_int(hexes &A1, hexes &A2)
 {

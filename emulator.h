@@ -24,7 +24,7 @@ private:
 //    typedef void (emulator::*srch_fnc)(void);
 //    srch_fnc cmd_methods[3];
 
-    void(emulator::*cmd_methods[125])(void);
+    void(emulator::*cmd_methods[133])(void);
 
     bool stop_flag;
 
@@ -95,6 +95,7 @@ private:
 
     void RST1();
 
+    void ANA(hexes &R);
 
 
 
@@ -279,6 +280,25 @@ private:
     void JNC(){ JMP(!Cy); }
 
     void JMP();
+
+
+    //ANA
+    void ANA_A(){ ANA(A);}
+
+    void ANA_B(){ ANA(B);}
+
+    void ANA_C(){ ANA(C);}
+
+    void ANA_D(){ ANA(D);}
+
+    void ANA_E(){ ANA(E);}
+
+    void ANA_H(){ ANA(H);}
+
+    void ANA_L(){ ANA(L);}
+
+
+    void ANA_M(){ ANA(get_cell(H,L));}
 
     //flags
     bool Cy;
