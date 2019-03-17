@@ -568,7 +568,8 @@ void emulator::init_umpk_cmd_list()
     umpk_cmd_list.add("A6");
     add_cmd_methods(all_cmd,(&emulator::ANA_M));
 
-
+    umpk_cmd_list.add("00");
+    add_cmd_methods(all_cmd,(&emulator::null_cmd));
 
 
 }
@@ -798,6 +799,11 @@ void emulator::RST1()
  void emulator::ANA(hexes &R)
  {
         A&=R;
+
+        if(A == 0)
+            Z=0;
+
+         point++;
  }
 
 

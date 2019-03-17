@@ -24,7 +24,7 @@ private:
 //    typedef void (emulator::*srch_fnc)(void);
 //    srch_fnc cmd_methods[3];
 
-    void(emulator::*cmd_methods[133])(void);
+    void(emulator::*cmd_methods[134])(void);
 
     bool stop_flag;
 
@@ -97,7 +97,7 @@ private:
 
     void ANA(hexes &R);
 
-
+    void null_cmd(){point++;}
 
 
     int hex_couple_to_int(hexes &A1, hexes &A2);
