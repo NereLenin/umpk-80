@@ -55,13 +55,13 @@ public:
 
     bool operator > (const unsigned long);
 
-    void operator&=( const hexes& );
+    void operator&=( const hexes& ); //and
 
-    void operator|=(  const hexes& );
+    void operator|=(  const hexes& ); // or
 
-    void operator^=(  const hexes&  );
+    void operator^=(  const hexes&  ); //xor
 
-    void operator~();
+    void operator~(); //inv
 
     friend class emulator;
     //<<

@@ -568,9 +568,77 @@ void emulator::init_umpk_cmd_list()
     umpk_cmd_list.add("A6");
     add_cmd_methods(all_cmd,(&emulator::ANA_M));
 
+    //null
     umpk_cmd_list.add("00");
     add_cmd_methods(all_cmd,(&emulator::null_cmd));
 
+    //ANI
+    umpk_cmd_list.add("E6");
+    add_cmd_methods(all_cmd,(&emulator::ANI));
+
+    //XRA
+    umpk_cmd_list.add("AF");
+    add_cmd_methods(all_cmd,(&emulator::XRA_A));
+
+    umpk_cmd_list.add("A8");
+    add_cmd_methods(all_cmd,(&emulator::XRA_B));
+
+    umpk_cmd_list.add("A9");
+    add_cmd_methods(all_cmd,(&emulator::XRA_C));
+
+    umpk_cmd_list.add("AA");
+    add_cmd_methods(all_cmd,(&emulator::XRA_D));
+
+    umpk_cmd_list.add("AB");
+    add_cmd_methods(all_cmd,(&emulator::XRA_E));
+
+    umpk_cmd_list.add("AC");
+    add_cmd_methods(all_cmd,(&emulator::XRA_H));
+
+    umpk_cmd_list.add("AD");
+    add_cmd_methods(all_cmd,(&emulator::XRA_L));
+
+    umpk_cmd_list.add("AE");
+    add_cmd_methods(all_cmd,(&emulator::XRA_M));
+
+    //XRI
+    umpk_cmd_list.add("EE");
+    add_cmd_methods(all_cmd,(&emulator::XRI));
+
+    //ORA
+    umpk_cmd_list.add("B7");
+    add_cmd_methods(all_cmd,(&emulator::ORA_A));
+
+    umpk_cmd_list.add("B0");
+    add_cmd_methods(all_cmd,(&emulator::ORA_B));
+
+    umpk_cmd_list.add("B1");
+    add_cmd_methods(all_cmd,(&emulator::ORA_C));
+
+    umpk_cmd_list.add("B2");
+    add_cmd_methods(all_cmd,(&emulator::ORA_D));
+
+    umpk_cmd_list.add("B3");
+    add_cmd_methods(all_cmd,(&emulator::ORA_E));
+
+    umpk_cmd_list.add("B4");
+    add_cmd_methods(all_cmd,(&emulator::ORA_H));
+
+    umpk_cmd_list.add("B5");
+    add_cmd_methods(all_cmd,(&emulator::ORA_L));
+
+    umpk_cmd_list.add("B6");
+    add_cmd_methods(all_cmd,(&emulator::ORA_M));
+
+    //ORI
+    umpk_cmd_list.add("F6");
+    add_cmd_methods(all_cmd,(&emulator::ORI));
+
+    //CMA
+    umpk_cmd_list.add("2F");
+    add_cmd_methods(all_cmd,(&emulator::CMA));
+
+  //  std::cout << all_cmd << std::endl;
 
 }
 
@@ -578,6 +646,7 @@ void emulator::iteration()
 {
      for(int i =0; i<all_cmd; i++)//проходим по всем командам
     {
+         if(point>896) return;//end of cmd list
 
         if(list[point] == umpk_cmd_list[i])//
         {
@@ -801,11 +870,40 @@ void emulator::RST1()
         A&=R;
 
         if(A == 0)
-            Z=0;
+            Z=1;
 
          point++;
  }
 
+ void emulator::XRA(hexes &R)
+ {
+     A^=R;
+
+     if(A == 0)
+         Z=1;
+
+      point++;
+ }
+
+ void emulator::ORA(hexes &R)
+ {
+     A|=R;
+
+     if(A == 0)
+         Z=1;
+
+      point++;
+ }
+
+ void emulator::CMA()
+ {
+     ~A;
+
+     if(A == 0)
+         Z=1;
+
+     point++;
+ }
 
 int emulator::hex_couple_to_int(hexes &A1, hexes &A2)
 {

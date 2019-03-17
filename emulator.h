@@ -24,7 +24,7 @@ private:
 //    typedef void (emulator::*srch_fnc)(void);
 //    srch_fnc cmd_methods[3];
 
-    void(emulator::*cmd_methods[134])(void);
+    void(emulator::*cmd_methods[154])(void);
 
     bool stop_flag;
 
@@ -93,11 +93,27 @@ private:
     void LDAX(hexes &R1, hexes &R2);
     void STAX(hexes &R1, hexes &R2);
 
+
     void RST1();
+
+    void null_cmd(){point++;}
+
+
 
     void ANA(hexes &R);
 
-    void null_cmd(){point++;}
+    void ANI(){point++;ANA(list[point]);}
+
+    void XRI(){point++;XRA(list[point]);}
+
+    void ORI(){point++;ORA(list[point]);}
+
+    void XRA(hexes &R);
+
+    void ORA(hexes &R);
+
+    void CMA();
+
 
 
     int hex_couple_to_int(hexes &A1, hexes &A2);
@@ -299,6 +315,43 @@ private:
 
 
     void ANA_M(){ ANA(get_cell(H,L));}
+
+
+    //XRA
+    void XRA_A(){ XRA(A);}
+
+    void XRA_B(){ XRA(B);}
+
+    void XRA_C(){ XRA(C);}
+
+    void XRA_D(){ XRA(D);}
+
+    void XRA_E(){ XRA(E);}
+
+    void XRA_H(){ XRA(H);}
+
+    void XRA_L(){ XRA(L);}
+
+
+    void XRA_M(){ XRA(get_cell(H,L));}
+
+    //ORA
+    void ORA_A(){ ORA(A);}
+
+    void ORA_B(){ ORA(B);}
+
+    void ORA_C(){ ORA(C);}
+
+    void ORA_D(){ ORA(D);}
+
+    void ORA_E(){ ORA(E);}
+
+    void ORA_H(){ ORA(H);}
+
+    void ORA_L(){ ORA(L);}
+
+
+    void ORA_M(){ ORA(get_cell(H,L));}
 
     //flags
     bool Cy;
