@@ -64,6 +64,7 @@ private:
 
     void set_add(hexes &A1, hexes &A2, hexes &value);
 
+    bool check_P(hexes &R);
 
     void JMP(const bool &flag);
 

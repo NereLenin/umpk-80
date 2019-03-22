@@ -1,5 +1,19 @@
 #include "emulator.h"
 
+bool emulator::check_P(hexes &R)
+{
+
+    int count_1 = 0;
+
+    for(unsigned long i=0;i<8;i++)
+    {
+        if(R.b[i] == true)
+            count_1++;
+    }
+
+    return ((count_1%2) == 0);
+
+}
 
 emulator::emulator()
 {
@@ -701,7 +715,6 @@ void emulator::start()
 
 //-----------------------------------//
 
-//flag Z
 
 void emulator::MOV(hexes& R1, hexes& R2){
     R1 = R2;
@@ -716,9 +729,19 @@ void emulator::MVI(hexes& R){
 
 void emulator::ADD(hexes& R)
 {
-    if(A.to_int() + R.to_int()>255) Cy=1;
 
     A = (A+R);
+
+    //Z
+    if(A==0) Z=1;
+    else  Z=0;
+
+    //Cy
+    if(A < R) Cy=1;
+    else Cy=0;
+
+    //P
+    P = check_P(A);
 
     point++;
 }
@@ -733,13 +756,19 @@ void emulator::ADI(){
 
 void emulator::SUB(hexes& R)
 {
-   if(A < R)
-       Cy=1;
-   if(A == R)
-       Z=1;
+
+   //C
+   if(A < R) Cy=1;
+   else Cy=0;
+
+   //Z
+   if(A == R) Z=1;
+   else Z=0;
 
     A = (A-R);
 
+    //P
+    P = check_P(A);
 
     point++;
 }
@@ -751,33 +780,101 @@ void emulator::SUI(){
 }
 
 void emulator::INR(hexes& R){
-    if(R == 255)
-     {
-        Cy = 1;
-    }
+
+    //c
+    if(R == 255) Cy = 1;
+    else Cy =0;
+
     R = (R + 1);
 
-    if(R == 0)
-     {
-        Z=1;
-     }
+    //z
+    if(R == 0) Z=1;
+    else Z=0;
+
+    //P
+
+    P = check_P(A);
 
         point++;
 }
 void emulator::DCR(hexes& R){
-    if(R == 0)
-     {
-        Cy = 1;
-     }
+
+    //C
+    if(R == 0)  Cy = 1;
+    else Cy=0;
+
      R = (R - 1);
 
-     if(R == 0)
-      {
-         Z=1;
-      }
+     //Z
+     if(R == 0) Z=1;
+     else Z = 0;
+
+     //P
+
+     P = check_P(A);
+
+     point++;
+}
+
+
+void emulator::ANA(hexes &R)
+{
+       A&=R;
+
+       //Z
+       if(A == 0) Z=1;
+       else Z=0;
+
+       //P
+       P = check_P(A);
+
+        point++;
+}
+
+void emulator::XRA(hexes &R)
+{
+    A^=R;
+
+    //Z
+    if(A == 0) Z=1;
+    else Z=0;
+
+    //P
+    P = check_P(A);
+
+     point++;
+}
+
+void emulator::ORA(hexes &R)
+{
+    A|=R;
+
+    //Z
+    if(A == 0)  Z=1;
+    else Z=0;
+
+    //P
+    P = check_P(A);
+
+     point++;
+}
+
+void emulator::CMA()
+{
+    ~A;
+
+    //Z
+    if(A == 0) Z=1;
+    else Z=0;
+
+    //P
+    P = check_P(A);
 
     point++;
 }
+
+
+
 void emulator::LDA()
 {
     hexes *t_R1 = new hexes;
@@ -873,45 +970,7 @@ void emulator::RST1()
     stop_flag = 1;
 }
 
- void emulator::ANA(hexes &R)
- {
-        A&=R;
 
-        if(A == 0)
-            Z=1;
-
-         point++;
- }
-
- void emulator::XRA(hexes &R)
- {
-     A^=R;
-
-     if(A == 0)
-         Z=1;
-
-      point++;
- }
-
- void emulator::ORA(hexes &R)
- {
-     A|=R;
-
-     if(A == 0)
-         Z=1;
-
-      point++;
- }
-
- void emulator::CMA()
- {
-     ~A;
-
-     if(A == 0)
-         Z=1;
-
-     point++;
- }
 
 int emulator::hex_couple_to_int(hexes &A1, hexes &A2)
 {
