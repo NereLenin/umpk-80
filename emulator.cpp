@@ -15,6 +15,42 @@ bool emulator::check_P(hexes &R)
 
 }
 
+
+bool emulator::check_Ac(hexes &R)
+{
+    bool left_has_one = 0;
+    bool right_has_only_null = 1;
+
+    //проверяем левый полубайт, он должен иметь хоть одну 1
+    for(unsigned long i = 4; i <= 7;i++)
+        if(R.b[i] == 1)
+        {
+            left_has_one = 1;
+            break;
+        }
+
+
+//    if(!left_has_one) return 0;
+
+    //проверяем правый полубайт, он должен иметь все нули
+    for(unsigned long i = 0; i < 4;i++)
+        if(R.b[i] == 1)
+        {
+            right_has_only_null = 0;
+            break;
+        }
+
+    //if(right_has_only_null) return 1;
+
+    return (left_has_one && right_has_only_null);
+
+}
+
+
+
+
+
+
 emulator::emulator()
 {
     A = 0;
@@ -28,7 +64,7 @@ emulator::emulator()
     H = 0;
     L = 0;
 
-    Cy = Z = P = S = 0;
+    Cy = Z = P = S = Ac =0;
 
     point = 0;
 
@@ -692,7 +728,7 @@ void emulator::start()
     try
     {
 
-    for(i=0; i<1000 && !stop_flag;i++)
+    for(i=0; i<1000 && point <= 896 && !stop_flag;i++)
     {
 
 
@@ -747,6 +783,9 @@ void emulator::ADD(hexes& R)
     if(A.b[7] == 1) S = 1;
     else S=0;
 
+    //Ac
+    check_Ac(A);
+
     point++;
 }
 
@@ -755,7 +794,7 @@ void emulator::ADI(){
 
     ADD(list[point]);
 
-    point++;
+    point++;//может не надо? в Адд же есть
 }
 
 void emulator::SUB(hexes& R)
@@ -777,6 +816,10 @@ void emulator::SUB(hexes& R)
     //S
     if(A.b[7] == 1) S = 1;
     else S=0;
+
+
+    //Ac
+    check_Ac(A);
 
     point++;
 }
@@ -807,6 +850,10 @@ void emulator::INR(hexes& R){
     if(A.b[7] == 1) S = 1;
     else S=0;
 
+
+    //Ac
+    check_Ac(A);
+
         point++;
 }
 void emulator::DCR(hexes& R){
@@ -828,6 +875,10 @@ void emulator::DCR(hexes& R){
      if(A.b[7] == 1) S = 1;
      else S=0;
 
+
+     //Ac
+     check_Ac(A);
+
      point++;
 }
 
@@ -847,6 +898,9 @@ void emulator::ANA(hexes &R)
        if(A.b[7] == 1) S = 1;
        else S=0;
 
+       //Ac
+       check_Ac(A);
+
         point++;
 }
 
@@ -860,6 +914,13 @@ void emulator::XRA(hexes &R)
 
     //P
     P = check_P(A);
+
+    //S
+    if(A.b[7] == 1) S = 1;
+    else S=0;
+
+    //Ac
+    check_Ac(A);
 
      point++;
 }
@@ -879,6 +940,9 @@ void emulator::ORA(hexes &R)
     if(A.b[7] == 1) S = 1;
     else S=0;
 
+    //Ac
+    check_Ac(A);
+
      point++;
 }
 
@@ -896,6 +960,9 @@ void emulator::CMA()
     //S
     if(A.b[7] == 1) S = 1;
     else S=0;
+
+    //Ac
+    check_Ac(A);
 
     point++;
 }

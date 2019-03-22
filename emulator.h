@@ -66,6 +66,8 @@ private:
 
     bool check_P(hexes &R);
 
+    bool check_Ac(hexes &R);
+
     void JMP(const bool &flag);
 
 
@@ -365,6 +367,7 @@ private:
     bool Z;
     bool P;
     bool S;
+    bool Ac;
 
     void add_cmd(int);//delete?
     void add_cmd(const hexes&);
