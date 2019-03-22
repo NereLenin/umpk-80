@@ -24,21 +24,20 @@ private:
 //    typedef void (emulator::*srch_fnc)(void);
 //    srch_fnc cmd_methods[3];
 
-    void(emulator::*cmd_methods[154])(void);
+    void(emulator::*cmd_methods[156])(void);
 
     bool stop_flag;
 
     //accum
     hexes A;
 
-
     //couple BC
     hexes B,C;
 
-    //couple
+    //couple DE
     hexes D,E;
 
-    //couple
+    //couple HL
     hexes H,L;
 
     //especial virtual registr
@@ -96,7 +95,7 @@ private:
 
     void RST1();
 
-    void null_cmd(){point++;}
+    void NOP(){point++;}
 
 
 
@@ -116,8 +115,13 @@ private:
 
 
 
-    int hex_couple_to_int(hexes &A1, hexes &A2);
+    void RLC(){A.c_shift_left();}
+    //RAL//?
+    void RRC(){A.c_shift_right();}
 
+
+
+    int hex_couple_to_int(hexes &A1, hexes &A2);
 
     //mov
 

@@ -42,7 +42,7 @@ public:
 
 
     void c_shift_left (int n);//many shift
-    void c_shift_right (int n);
+    void c_shift_right (int n);//эти выпилить для них нет комманд избыточно тобишь
 
 
 

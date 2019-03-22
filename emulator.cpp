@@ -570,7 +570,7 @@ void emulator::init_umpk_cmd_list()
 
     //null
     umpk_cmd_list.add("00");
-    add_cmd_methods(all_cmd,(&emulator::null_cmd));
+    add_cmd_methods(all_cmd,(&emulator::NOP));
 
     //ANI
     umpk_cmd_list.add("E6");
@@ -637,6 +637,14 @@ void emulator::init_umpk_cmd_list()
     //CMA
     umpk_cmd_list.add("2F");
     add_cmd_methods(all_cmd,(&emulator::CMA));
+
+    //RLC
+    umpk_cmd_list.add("07");
+    add_cmd_methods(all_cmd,(&emulator::RLC));
+
+    //RLC
+    umpk_cmd_list.add("0F");
+    add_cmd_methods(all_cmd,(&emulator::RRC));
 
   //  std::cout << all_cmd << std::endl;
 
