@@ -28,7 +28,7 @@ emulator::emulator()
     H = 0;
     L = 0;
 
-    Cy = Z = P = 0;
+    Cy = Z = P = S = 0;
 
     point = 0;
 
@@ -743,6 +743,10 @@ void emulator::ADD(hexes& R)
     //P
     P = check_P(A);
 
+    //S
+    if(A.b[7] == 1) S = 1;
+    else S=0;
+
     point++;
 }
 
@@ -770,6 +774,10 @@ void emulator::SUB(hexes& R)
     //P
     P = check_P(A);
 
+    //S
+    if(A.b[7] == 1) S = 1;
+    else S=0;
+
     point++;
 }
 
@@ -795,6 +803,10 @@ void emulator::INR(hexes& R){
 
     P = check_P(A);
 
+    //S
+    if(A.b[7] == 1) S = 1;
+    else S=0;
+
         point++;
 }
 void emulator::DCR(hexes& R){
@@ -810,8 +822,11 @@ void emulator::DCR(hexes& R){
      else Z = 0;
 
      //P
-
      P = check_P(A);
+
+     //S
+     if(A.b[7] == 1) S = 1;
+     else S=0;
 
      point++;
 }
@@ -827,6 +842,10 @@ void emulator::ANA(hexes &R)
 
        //P
        P = check_P(A);
+
+       //S
+       if(A.b[7] == 1) S = 1;
+       else S=0;
 
         point++;
 }
@@ -856,6 +875,10 @@ void emulator::ORA(hexes &R)
     //P
     P = check_P(A);
 
+    //S
+    if(A.b[7] == 1) S = 1;
+    else S=0;
+
      point++;
 }
 
@@ -869,6 +892,10 @@ void emulator::CMA()
 
     //P
     P = check_P(A);
+
+    //S
+    if(A.b[7] == 1) S = 1;
+    else S=0;
 
     point++;
 }

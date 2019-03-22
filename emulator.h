@@ -358,10 +358,13 @@ private:
 
     void ORA_M(){ ORA(get_cell(H,L));}
 
+
+
     //flags
     bool Cy;
     bool Z;
     bool P;
+    bool S;
 
     void add_cmd(int);//delete?
     void add_cmd(const hexes&);
