@@ -24,7 +24,7 @@ private:
 //    typedef void (emulator::*srch_fnc)(void);
 //    srch_fnc cmd_methods[3];
 
-    void(emulator::*cmd_methods[167])(void);
+    void(emulator::*cmd_methods[169])(void);
 
     bool stop_flag;
 
@@ -305,13 +305,17 @@ private:
 
     //jamp
 
+    void JMP();
+
     void JZ(){JMP(Z);}
     void JNZ(){JMP(!Z);}
 
     void JC(){ JMP(Cy); }
     void JNC(){ JMP(!Cy); }
 
-    void JMP();
+    void JP(){JMP(!S);}
+    void JM(){JMP(S);}
+
 
 
     //ANA

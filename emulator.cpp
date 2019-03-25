@@ -742,6 +742,15 @@ void emulator::init_umpk_cmd_list()
     add_cmd_methods(all_cmd,(&emulator::STC));
 
 
+    //JP
+    umpk_cmd_list.add("F2");
+    add_cmd_methods(all_cmd,(&emulator::JP));
+
+    //JM
+    umpk_cmd_list.add("FA");
+    add_cmd_methods(all_cmd,(&emulator::JM));
+
+
 
   //  std::cout << all_cmd << std::endl;
 
