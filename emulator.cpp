@@ -750,9 +750,15 @@ void emulator::init_umpk_cmd_list()
     umpk_cmd_list.add("FA");
     add_cmd_methods(all_cmd,(&emulator::JM));
 
+    //JPE
+    umpk_cmd_list.add("EA");
+    add_cmd_methods(all_cmd,(&emulator::JPE));
 
+    //JPO
+    umpk_cmd_list.add("E2");
+    add_cmd_methods(all_cmd,(&emulator::JPO));
 
-  //  std::cout << all_cmd << std::endl;
+    std::cout << all_cmd << std::endl;
 
 }
 
