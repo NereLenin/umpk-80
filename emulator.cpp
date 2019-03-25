@@ -83,30 +83,35 @@ void emulator::print_registers()
 {
     std::cout << "A: ";
     A.print_bin();
-
+    std::cout << std::endl;
 
     std::cout << "B: ";
     B.print_bin();
-
+    std::cout << std::endl;
 
     std::cout << "C: ";
     C.print_bin();
+    std::cout << std::endl;
 
 
     std::cout << "D: ";
     D.print_bin();
+    std::cout << std::endl;
 
 
     std::cout << "E: ";
     E.print_bin();
+    std::cout << std::endl;
 
 
     std::cout << "H: ";
     H.print_bin();
+    std::cout << std::endl;
 
 
     std::cout << "L: ";
     L.print_bin();
+    std::cout << std::endl;
 }
 
 void emulator::print_flags()
@@ -696,6 +701,33 @@ void emulator::init_umpk_cmd_list()
     umpk_cmd_list.add("0F");
     add_cmd_methods(all_cmd,(&emulator::RRC));
 
+
+    //CMP
+
+    umpk_cmd_list.add("BF");
+    add_cmd_methods(all_cmd,(&emulator::CMP_A));
+
+    umpk_cmd_list.add("B8");
+    add_cmd_methods(all_cmd,(&emulator::CMP_B));
+
+    umpk_cmd_list.add("B9");
+    add_cmd_methods(all_cmd,(&emulator::CMP_C));
+
+    umpk_cmd_list.add("BA");
+    add_cmd_methods(all_cmd,(&emulator::CMP_D));
+
+    umpk_cmd_list.add("BB");
+    add_cmd_methods(all_cmd,(&emulator::CMP_E));
+
+    umpk_cmd_list.add("BC");
+    add_cmd_methods(all_cmd,(&emulator::CMP_H));
+
+    umpk_cmd_list.add("BD");
+    add_cmd_methods(all_cmd,(&emulator::CMP_L));
+
+    umpk_cmd_list.add("BE");
+    add_cmd_methods(all_cmd,(&emulator::CMP_M));
+
   //  std::cout << all_cmd << std::endl;
 
 }
@@ -968,6 +1000,19 @@ void emulator::CMA()
 }
 
 
+void emulator::CMP(hexes &R)
+{
+    hexes *temp_hex = new hexes;
+
+    *temp_hex = A;
+
+    SUB(R);
+
+    A = *temp_hex;
+    delete temp_hex;
+
+    point++;
+}
 
 void emulator::LDA()
 {

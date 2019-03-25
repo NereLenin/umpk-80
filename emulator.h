@@ -24,7 +24,7 @@ private:
 //    typedef void (emulator::*srch_fnc)(void);
 //    srch_fnc cmd_methods[3];
 
-    void(emulator::*cmd_methods[156])(void);
+    void(emulator::*cmd_methods[164])(void);
 
     bool stop_flag;
 
@@ -116,6 +116,7 @@ private:
 
     void CMA();
 
+    void CMP(hexes &R);
 
 
     void RLC(){A.c_shift_left();}
@@ -360,7 +361,24 @@ private:
 
     void ORA_M(){ ORA(get_cell(H,L));}
 
+    //cmp
 
+    void CMP_A(){ CMP(A);}
+
+    void CMP_B(){ CMP(B);}
+
+    void CMP_C(){ CMP(C);}
+
+    void CMP_D(){ CMP(D);}
+
+    void CMP_E(){ CMP(E);}
+
+    void CMP_H(){ CMP(H);}
+
+    void CMP_L(){ CMP(L);}
+
+
+    void CMP_M(){ CMP(get_cell(H,L));}
 
     //flags
     bool Cy;

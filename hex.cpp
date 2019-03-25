@@ -16,7 +16,7 @@ hexes::hexes()
 
 hexes::hexes(const unsigned long& value)
 {
-    if(value>255) cout << "no more than 255 plz" << endl;
+    if(value>255) cout << "no more than 255 plz1" << endl;
     b = value;
 }
 
@@ -25,6 +25,7 @@ hexes::hexes(const char* value)
 {
     operator=(value);
 }
+
 
 
 // print format
@@ -119,11 +120,16 @@ void hexes::operator = (const char* value)
 
 hexes hexes::operator + (const hexes& two)
 {
+   if(b.to_ulong() + two.b.to_ulong()>255)
+       return (b.to_ulong() + two.b.to_ulong())-255;
    return (b.to_ulong() + two.b.to_ulong());
 }
 
 hexes hexes::operator - (const hexes& two)
 {
+   if(two.b.to_ulong() > b.to_ulong())
+       return (255 - (two.b.to_ulong() - b.to_ulong()));//шо за хуйня, почему возвращаем не обьект а инт преобразованный потом на лету
+   else
    return (b.to_ulong() - two.b.to_ulong());
 }
 
