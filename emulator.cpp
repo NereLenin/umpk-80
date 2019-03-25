@@ -1107,7 +1107,7 @@ void emulator::STAX(hexes &R1, hexes &R2)
 void emulator::LHLD()
 {
     point++;
-    hexes first_add = list[point];
+    hexes first_add = list[point];//change on dynamic
     point++;
     hexes second_add = list[point];
 
