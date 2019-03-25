@@ -758,6 +758,13 @@ void emulator::init_umpk_cmd_list()
     umpk_cmd_list.add("E2");
     add_cmd_methods(all_cmd,(&emulator::JPO));
 
+
+    //LHLD
+    umpk_cmd_list.add("2A");
+    add_cmd_methods(all_cmd,(&emulator::LHLD));
+
+
+
     std::cout << all_cmd << std::endl;
 
 }
@@ -1096,6 +1103,23 @@ void emulator::STAX(hexes &R1, hexes &R2)
         get_cell(R1,R2) = A;
             point++;
 }
+
+void emulator::LHLD()
+{
+    point++;
+    hexes first_add = list[point];
+    point++;
+    hexes second_add = list[point];
+
+    L = list[hex_couple_to_int(first_add,second_add)];
+
+    inr_hex_couple(first_add,second_add);
+
+    H = list[hex_couple_to_int(first_add,second_add)];
+
+    point++;
+}
+
 
 void emulator::JMP()
 {

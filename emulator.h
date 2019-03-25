@@ -24,7 +24,7 @@ private:
 //    typedef void (emulator::*srch_fnc)(void);
 //    srch_fnc cmd_methods[3];
 
-    void(emulator::*cmd_methods[171])(void);
+    void(emulator::*cmd_methods[172])(void);
 
     bool stop_flag;
 
@@ -295,6 +295,8 @@ private:
     void STAX_D(){LDAX(D,E);}
 
     //lhld
+
+    void LHLD();
 
 
     //shld
