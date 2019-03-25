@@ -763,6 +763,9 @@ void emulator::init_umpk_cmd_list()
     umpk_cmd_list.add("2A");
     add_cmd_methods(all_cmd,(&emulator::LHLD));
 
+    //SHLD
+    umpk_cmd_list.add("22");
+    add_cmd_methods(all_cmd,(&emulator::SHLD));
 
 
     std::cout << all_cmd << std::endl;
@@ -1120,6 +1123,21 @@ void emulator::LHLD()
     point++;
 }
 
+void emulator::SHLD()
+{
+    point++;
+    hexes first_add = list[point];//change on dynamic
+    point++;
+    hexes second_add = list[point];
+
+    list[hex_couple_to_int(first_add,second_add)] = L;
+
+    inr_hex_couple(first_add,second_add);
+
+    list[hex_couple_to_int(first_add,second_add)] = H;
+
+    point++;
+}
 
 void emulator::JMP()
 {
