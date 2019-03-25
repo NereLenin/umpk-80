@@ -24,7 +24,7 @@ private:
 //    typedef void (emulator::*srch_fnc)(void);
 //    srch_fnc cmd_methods[3];
 
-    void(emulator::*cmd_methods[164])(void);
+    void(emulator::*cmd_methods[167])(void);
 
     bool stop_flag;
 
@@ -116,7 +116,15 @@ private:
 
     void CMA();
 
+
     void CMP(hexes &R);
+
+    void CPI(){point++;CMP(list[point]);}
+
+
+    void CMC(){Cy=!Cy; point++;}
+
+    void STC(){Cy=1;point++;}
 
 
     void RLC(){A.c_shift_left();}

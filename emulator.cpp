@@ -728,6 +728,21 @@ void emulator::init_umpk_cmd_list()
     umpk_cmd_list.add("BE");
     add_cmd_methods(all_cmd,(&emulator::CMP_M));
 
+    //cpi
+
+    umpk_cmd_list.add("FE");
+    add_cmd_methods(all_cmd,(&emulator::CPI));
+
+    //cmc
+    umpk_cmd_list.add("3F");
+    add_cmd_methods(all_cmd,(&emulator::CMC));
+
+    //stc
+    umpk_cmd_list.add("37");
+    add_cmd_methods(all_cmd,(&emulator::STC));
+
+
+
   //  std::cout << all_cmd << std::endl;
 
 }
