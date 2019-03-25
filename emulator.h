@@ -24,7 +24,7 @@ private:
 //    typedef void (emulator::*srch_fnc)(void);
 //    srch_fnc cmd_methods[3];
 
-    void(emulator::*cmd_methods[173])(void);
+    void(emulator::*cmd_methods[174])(void);
 
     bool stop_flag;
 
@@ -303,6 +303,8 @@ private:
     void SHLD();
 
     //xchg
+    void XCHG();
+
 
 
     //jamp

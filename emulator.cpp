@@ -767,6 +767,9 @@ void emulator::init_umpk_cmd_list()
     umpk_cmd_list.add("22");
     add_cmd_methods(all_cmd,(&emulator::SHLD));
 
+    //XCHG
+    umpk_cmd_list.add("EB");
+    add_cmd_methods(all_cmd,(&emulator::XCHG));
 
     std::cout << all_cmd << std::endl;
 
@@ -1139,6 +1142,20 @@ void emulator::SHLD()
     point++;
 }
 
+
+void emulator::XCHG()
+{
+    hexes temp_hex;//change on dynamic
+    temp_hex=H;
+
+    H=D;
+    D = temp_hex;
+
+    temp_hex = L;
+    L=E;
+    E=temp_hex;
+
+}
 void emulator::JMP()
 {
     hexes *t_R1 = new hexes;
