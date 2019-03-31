@@ -25,7 +25,7 @@ public:
 //    typedef void (emulator::*srch_fnc)(void);
 //    srch_fnc cmd_methods[3];
 
-    void(emulator::*cmd_methods[184])(void);
+    void(emulator::*cmd_methods[192])(void);
 
     bool stop_flag;
 
@@ -138,18 +138,30 @@ public:
     void RET();
     void RET(bool flag);
 
-    void CZ(){CALL(Z);}//1
-    void CC(){CALL(Cy);}//2
-    void CP(){CALL(!S);}//3
-    void CPE(){CALL(P);}//4
+    //subCALL
+    void CZ(){CALL(Z);}
+    void CC(){CALL(Cy);}
+    void CP(){CALL(!S);}
+    void CPE(){CALL(P);}
 
 
+    void CNZ(){CALL(!Z);}
+    void CNC(){CALL(!Cy);}
+    void CM(){CALL(S);}
+    void CPO(){CALL(!P);}
 
-    void CNZ(){CALL(!Z);}//5
-    void CNC(){CALL(!Cy);}//6
-    void CM(){CALL(S);}//7
-    void CPO(){CALL(!P);}//8
+    //subRET
 
+    void RZ(){RET(Z);}
+    void RC(){RET(Cy);}
+    void RP(){RET(!S);}
+    void RPE(){RET(P);}
+
+
+    void RNZ(){RET(!Z);}
+    void RNC(){RET(!Cy);}
+    void RM(){RET(S);}
+    void RPO(){RET(!P);}
 
 
 

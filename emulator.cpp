@@ -806,6 +806,33 @@ void emulator::init_umpk_cmd_list()
     add_cmd_methods(all_cmd,(&emulator::CPO));
 
 
+    //RETsub
+
+    umpk_cmd_list.add("C8");
+    add_cmd_methods(all_cmd,(&emulator::RZ));
+
+    umpk_cmd_list.add("D8");
+    add_cmd_methods(all_cmd,(&emulator::RC));
+
+    umpk_cmd_list.add("F0");
+    add_cmd_methods(all_cmd,(&emulator::RP));
+
+    umpk_cmd_list.add("E8");
+    add_cmd_methods(all_cmd,(&emulator::RPE));
+
+    umpk_cmd_list.add("C0");
+    add_cmd_methods(all_cmd,(&emulator::RNZ));
+
+    umpk_cmd_list.add("D0");
+    add_cmd_methods(all_cmd,(&emulator::RNC));
+
+    umpk_cmd_list.add("F8");
+    add_cmd_methods(all_cmd,(&emulator::RM));
+
+    umpk_cmd_list.add("E0");
+    add_cmd_methods(all_cmd,(&emulator::RPO));
+
+
     std::cout << all_cmd << std::endl;
 
 }
