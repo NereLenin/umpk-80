@@ -779,6 +779,33 @@ void emulator::init_umpk_cmd_list()
     umpk_cmd_list.add("C9");
     add_cmd_methods(all_cmd,(&emulator::RET));
 
+    //Csub
+
+    umpk_cmd_list.add("CC");
+    add_cmd_methods(all_cmd,(&emulator::CZ));
+
+    umpk_cmd_list.add("DC");
+    add_cmd_methods(all_cmd,(&emulator::CC));
+
+    umpk_cmd_list.add("F4");
+    add_cmd_methods(all_cmd,(&emulator::CP));
+
+    umpk_cmd_list.add("EC");
+    add_cmd_methods(all_cmd,(&emulator::CPE));
+
+    umpk_cmd_list.add("C4");
+    add_cmd_methods(all_cmd,(&emulator::CNZ));
+
+    umpk_cmd_list.add("D4");
+    add_cmd_methods(all_cmd,(&emulator::CNC));
+
+    umpk_cmd_list.add("FC");
+    add_cmd_methods(all_cmd,(&emulator::CM));
+
+    umpk_cmd_list.add("E4");
+    add_cmd_methods(all_cmd,(&emulator::CPO));
+
+
     std::cout << all_cmd << std::endl;
 
 }
@@ -1234,6 +1261,18 @@ void emulator::RET()
 //   point++;//to second
 //   point++;//to next
 }
+
+
+void emulator::RET(bool flag)
+{
+    if(flag)
+    {
+        RET();
+    }
+    else point++;
+}
+
+
 
 
 
