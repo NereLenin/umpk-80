@@ -64,6 +64,7 @@ public:
     void operator~(); //inv
 
     friend class emulator;
+    friend class hex_couple;
     //<<
 
 };
@@ -74,6 +75,8 @@ class hex_couple
     hexes second_addr;
 
 public:
+    hex_couple();
+    hex_couple(int point);
     const hexes& get_first();
     const hexes& get_second();
 
@@ -82,9 +85,15 @@ public:
 
     void print()//выпилить
     {
-        std::cout << first_addr.to_int() << " " << second_addr.to_int()  << std::endl;
+       std::cout << std::endl;
+        first_addr.print_hex();
+        std::cout << std::endl;
+        second_addr.print_hex();
+        std::cout << std::endl;
+        //std::cout << first_addr.to_int() << " " << second_addr.to_int()  << std::endl;
     }
 
+    friend class emulator;
 };
 
 #endif // HEX_H

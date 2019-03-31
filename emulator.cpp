@@ -771,6 +771,14 @@ void emulator::init_umpk_cmd_list()
     umpk_cmd_list.add("EB");
     add_cmd_methods(all_cmd,(&emulator::XCHG));
 
+    //CALL
+    umpk_cmd_list.add("CD");
+    add_cmd_methods(all_cmd,(&emulator::CALL));
+
+    //RET
+    umpk_cmd_list.add("C9");
+    add_cmd_methods(all_cmd,(&emulator::RET));
+
     std::cout << all_cmd << std::endl;
 
 }
@@ -1164,7 +1172,7 @@ void emulator::JMP()
     *t_R2 = list[point];
     point++;
     *t_R1 = list[point];
-    point++;
+    point++;//not need?
 
     point = hex_couple_to_int(*t_R1,*t_R2);
 
@@ -1191,12 +1199,42 @@ void emulator::JMP(const bool &flag)
     else point+=3;
 }
 
+void emulator::CALL(){
+    hex_couple *new_add = new hex_couple(point);
+
+    emul_stack.push(*new_add);
+
+    JMP();
+}
+
+void emulator::CALL(bool flag){
+    if(flag)
+    {
+        CALL();
+    }
+    else point+=3;
+}
+
+
 
 void emulator::RST1()
 {
     point = 0;
     stop_flag = 1;
 }
+
+void emulator::RET()
+{
+   point = hex_couple_to_int(emul_stack.top().first_addr,emul_stack.top().second_addr);
+
+   emul_stack.pop();
+
+   point+=3;
+ //  point++;//to first
+//   point++;//to second
+//   point++;//to next
+}
+
 
 
 

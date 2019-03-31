@@ -308,6 +308,27 @@ void hexes::operator~()
 
 /*-------------------HEXCOUPLE------------------------*/
 
+hex_couple::hex_couple()
+{
+
+}
+
+hex_couple::hex_couple(int point)
+{
+    point+=2048;//int current address
+
+    std::bitset<16> *temp = new std::bitset<16>;
+
+    *temp = static_cast<unsigned long>(point);
+
+    for(unsigned long i=0;i<8;i++)
+         second_addr.b[i] = temp->operator[](i);
+
+    for(unsigned long i=8;i<16;i++)
+       first_addr.b[i-8] =  temp->operator[](i);
+
+    delete temp;
+}
 
 const hexes& hex_couple::get_first()
 {

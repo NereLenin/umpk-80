@@ -13,6 +13,7 @@ class emulator;
 class emulator
 {
 private:
+public:
     command_list list;
 
     command_list umpk_cmd_list; //p
@@ -24,7 +25,7 @@ private:
 //    typedef void (emulator::*srch_fnc)(void);
 //    srch_fnc cmd_methods[3];
 
-    void(emulator::*cmd_methods[174])(void);
+    void(emulator::*cmd_methods[176])(void);
 
     bool stop_flag;
 
@@ -130,6 +131,12 @@ private:
     void RLC(){A.c_shift_left();}
     //RAL//?
     void RRC(){A.c_shift_right();}
+
+    void CALL();
+    void CALL(bool flag);//if true go
+
+    void RET();
+
 
 
 

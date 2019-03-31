@@ -30,20 +30,40 @@ int main()
     test.add_cmd("080A","05");
     test.add_cmd("080B","08");
     test.add_cmd("080C","CF");
-*/
+ */
     test.add_cmd("0800","0E");//mvi c
     test.add_cmd("0801","06");
     test.add_cmd("0802","3E");//MVI A
     test.add_cmd("0803","04");
     test.add_cmd("0804","CF");
 
-    test.start();
+    //menu
+
+
+
+
+    hex_couple tests(0);
+
+   // tests.print();
+
+    test.emul_stack.push(tests);
+
+    test.emul_stack.top().print();
+
+    test.RET();
+
+    cout << test.point << endl;
+
+   // test.start();
+
+
+
     //test.CMP(test.C);
 
 
-    test.print_flags();
+    //test.print_flags();
 
-    test.print_registers();
+   // test.print_registers();
 
     // test.add_cmd("0804","00");//08
 
