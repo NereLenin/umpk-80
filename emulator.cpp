@@ -832,6 +832,15 @@ void emulator::init_umpk_cmd_list()
     umpk_cmd_list.add("E0");
     add_cmd_methods(all_cmd,(&emulator::RPO));
 
+    //IN
+
+    umpk_cmd_list.add("DB");
+    add_cmd_methods(all_cmd,(&emulator::IN));
+
+    //OUT
+    umpk_cmd_list.add("D3");
+    add_cmd_methods(all_cmd,(&emulator::OUT));
+
 
     std::cout << all_cmd << std::endl;
 
@@ -1300,7 +1309,37 @@ void emulator::RET(bool flag)
 }
 
 
+void emulator::IN()
+{
+    point++;
+    if(list[point] == 5) A = port_05;
+    else
+    if(list[point] == 7) A = port_07;
+    else
+    {
+        msg_error *port_error = new msg_error("Не найден порт.",point);
+        throw port_error;
+    }
 
+    point++;
+}
+
+
+void emulator::OUT()
+{
+
+    point++;
+    if(list[point] == 5) port_05 = A;
+    else
+    if(list[point] == 7) port_07 = A;
+    else
+    {
+        msg_error *port_error = new msg_error("Не найден порт.",point);
+        throw port_error;
+    }
+
+    point++;
+}
 
 
 

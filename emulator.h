@@ -25,7 +25,7 @@ public:
 //    typedef void (emulator::*srch_fnc)(void);
 //    srch_fnc cmd_methods[3];
 
-    void(emulator::*cmd_methods[192])(void);
+    void(emulator::*cmd_methods[194])(void);
 
     bool stop_flag;
 
@@ -46,6 +46,10 @@ public:
 
     std::stack<hex_couple> emul_stack;
 
+    //ports
+
+    hexes port_05;
+    hexes port_07;
 
     void add_cmd_methods(int &all_cmd, void (emulator::*func)() )
     {
@@ -164,6 +168,8 @@ public:
     void RPO(){RET(!P);}
 
 
+    void IN();
+    void OUT();
 
 
     int hex_couple_to_int(hexes &A1, hexes &A2);
